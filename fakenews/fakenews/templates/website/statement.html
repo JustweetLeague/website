@@ -1,7 +1,7 @@
-{% extends "base.html" %} {% block content %} {% load static from staticfiles %}
+{% extends "base.html" %} {% block content %}
 <header role=“banner”>
     <h1><a href="{% url 'index' %}">Check fake news</a></h1>
-    <form action="{% url 'search'" class="searchHeader">
+    <form action="{% url 'search' %}" class="searchHeader">
         <input type="text" name="search">
     </form>
 </header>
@@ -81,7 +81,8 @@
                     <br><i class="material-icons" style="color: #86CC00">thumb_up</i></button>
             </div>
             {% else %}
-            <p> No users have yet voted. <br> Vote: </p>
+            <p> No users have yet voted.
+                <br> Vote: </p>
             <div class="voting">
                 <button id="more">Fake
                     <br><i class="material-icons" style="color: #CC0000">thumb_down</i></button>
@@ -101,106 +102,85 @@
                     </ul>
                 </div>
                 <div id="containers">
+                    <!-- Additional information -->
                     <div class="tab" id="tabPanel1">
-                        <p> &nbsp; </p>
-                        <div id="card">
-                            <div class="card graph">
-                                <img src="_img/placeholder.png" alt="Avatar" style="width:80%; height:50%">
-                                <div class="container">
-                                    <h5>Geography</h5>
-                                </div>
+                        <!-- Cards container -->
+                        <p> &nbsp;</p>
+                        <div class="band">
+                            <!-- grid item, containing a card -->
+                            <div id="myCard" class="item-1">
+                                <a href="#" class="poster">
+                                    {% load static %}
+                                    <div class="thumb" style="background: url('{% static '_img/placeholder.png' %}') no-repeat;"></div>
+                                    <article>
+                                        <p>Distribution of tweets about the news in time</p>                                    
+                                    </article>
+                                </a>
                             </div>
-                            {% block addinfo %} {% endblock %}
+                            <!-- grid item, containing a card -->
+                            <div id="myCard" class="item-2">
+                                <a href="#" class="poster">
+                                    {% load static %}
+                                    <div class="thumb" style="background: url('{% static '_img/placeholder.png' %}') no-repeat;"></div>
+                                    <article>
+                                        <p>Radial diagram showing how much different factors affected the decision that the statement is 'fake'</p>
+                                    </article>
+                                </a>
+                            </div>
+                            <!-- grid item, containing a card -->
+                            <div id="myCard" class="item-3">
+                                <a href="" class="poster">
+                                    {% load static %}
+                                    <div class="thumb" style="background: url('{% static '_img/placeholder.png' %}') no-repeat;"></div>
+                                    <article>
+                                        <p>Map of statement spreading (if we have enough content on geolocation)</p>
+                                    </article>
+                                </a>
+                            </div>
                         </div>
+                        <p> &nbsp;</p>
+                        <!-- ______________________ -->
                     </div>
+                    <!-- Relevant articles -->
                     <div class="tab" id="tabPanel2">
-                        <p>articles</p>
+                        <p> &nbsp;</p>
+                        <!-- Cards container -->
+                        <div class="band">
+                            <!-- grid item, containing a card -->
+                            <div class="item-1">
+                                <a href="http://www.bbc.co.uk/news" target="_blank" class="poster">
+                                    {% load static %}
+                                    <div class="thumb" style="background-image: url(http://www.bbc.co.uk/news/special/2015/newsspec_10857/bbc_news_logo.png);"></div>
+                                    <article>
+                                        <h2>BBC news outlet</h2>
+                                        <span>BBC news</span>
+                                    </article>
+                                </a>
+                            </div>
+                            <!-- grid item, containing a card -->
+                            <div class="item-2">
+                                <a href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045" class="poster">
+                                    <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png);"></div>
+                                    <article>
+                                        <h2>How to Conduct Remote Usability Testing</h2>
+                                        <span>Harry Brignull</span>
+                                    </article>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- ______________________ -->
+                        <p> &nbsp;</p>
                     </div>
+                    <!-- Related tweets -->
                     <div class="tab" id="tabPanel3">
                         <p>twees</p>
                     </div>
+                    <!-- Comments -->
                     <div class="tab" id="tabPanel4">
                         <!-- begin wwww.htmlcommentbox.com -->
                         <div id="HCB_comment_box">
                             <a href="http://www.htmlcommentbox.com">Widget</a> is loading comments...
                         </div>
-                        <style>
-                        #HCB_comment_box textarea {}
-                        
-                        #HCB_comment_box {}
-                        
-                        #HCB_comment_box p.error {
-                            border: 4px solid #f88;
-                            background-color: #fee;
-                            color: #800;
-                        }
-                        
-                        #HCB_comment_box textarea,
-                        #HCB_comment_box input.text {
-                            border: 1px solid #ddd;
-                            border-left: 1px solid #ccc;
-                            border-top: 1px solid #ccc;
-                            background: url(bg.png) repeat-x;
-                        }
-                        
-                        #HCB_comment_box .hcb-wrapper-half {
-                            display: block;
-                            width: 50%;
-                            float: left;
-                        }
-                        
-                        #HCB_comment_box .hcb-wrapper {
-                            clear: both;
-                            margin-bottom: 0.5em;
-                        }
-                        
-                        #HCB_comment_box input.text {
-                            display: block;
-                            width: 97%;
-                        }
-                        
-                        #HCB_comment_box input.submit {
-                            margin: 0 7px 3px 0;
-                            background-color: #f5f5f5;
-                            border: 1px solid #ccc;
-                            border-top: 1px solid #ddd;
-                            border-left: 1px solid #ddd;
-                            font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
-                            font-size: 100%;
-                            line-height: 130%;
-                            text-decoration: none;
-                            font-weight: bold;
-                            color: #565656;
-                            cursor: pointer;
-                            width: auto;
-                            overflow: visible;
-                            padding: 4px 10px 3px 7px;
-                        }
-                        
-                        #HCB_comment_box input.submit:hover {
-                            background-color: #dff4ff;
-                            border: 1px solid #c2e1ef;
-                            color: #336699;
-                        }
-                        
-                        #HCB_comment_box span.home-desc {
-                            opacity: 0.4;
-                        }
-                        
-                        #HCB_comment_box div.comment {
-                            border-top: 1px solid #eee;
-                            margin-bottom: 0.5em;
-                        }
-                        
-                        .hcb-mod b {
-                            color: darkblue;
-                        }
-                        
-                        .hcb-link {
-                            color: blue;
-                            text-decoration: underline;
-                        }
-                        </style>
                         <script type="text/javascript" id="hcb">
                         /*<!--*/
                         if (!window.hcb_user) {
@@ -218,7 +198,9 @@
                     </div>
                 </div>
             </div>
-            <!-- The Modal -->
+
+            <!-- The Modals -->
+
             <div id="myModal" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
@@ -235,6 +217,41 @@
                     </div>
                 </div>
             </div>
+
+            <div id="myModal-2" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Modal Header-2</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the Modal Body</p>
+                        <p>Some other text...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <h3>Modal Footer-2</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div id="myModal-3" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Modal Header-3</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the Modal Body</p>
+                        <p>Some other text...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <h3>Modal Footer-3</h3>
+                    </div>
+                </div>
+            </div>
+
         </section>
     </article>
 </main>
@@ -243,10 +260,11 @@
         <br> Download it <a href="index.htm">here</a>!</p>
     <p>&copy;JustweetLeague 2017</p>
 </footer>
+
 <script>
 // Get the modal 
 var modal = document.getElementById('myModal'); // Get the button that opens the modal 
-var btn = document.getElementById("card"); // Get the <span> element that closes the modal
+var btn = document.getElementById('myCard'); // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal 

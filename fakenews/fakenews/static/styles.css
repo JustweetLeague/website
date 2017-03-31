@@ -2,12 +2,24 @@ html {
     background: #5e9bff;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     margin: 0;
     padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     color: black;
     clear: both;
     text-align: center;
@@ -107,7 +119,9 @@ footer p {
     color: white;
 }
 
+
 /* All Progress Bars */
+
 progress {
     width: 100%;
     /* Reset the default appearance */
@@ -116,7 +130,9 @@ progress {
     appearance: none;
 }
 
+
 /* Determinate */
+
 progress[value] {
     /* Reset the default appearance */
     -webkit-appearance: none;
@@ -124,16 +140,19 @@ progress[value] {
     appearance: none;
 }
 
+
 /* Indeterminate */
+
 progress:not([value]) {
     /* Reset the default appearance */
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
 }
+
 progress::-webkit-progress-bar {
     background: #86CC00;
-    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
     border-radius: 3px;
 }
 
@@ -141,28 +160,32 @@ progress::-webkit-progress-value {
     background-color: #CC0000;
     border-radius: 3px;
 }
+
 .voting {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.voting button{
+
+.voting button {
     background-color: Transparent;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     border: none;
-    cursor:pointer;
+    cursor: pointer;
     overflow: hidden;
-    outline:none;
+    outline: none;
 }
-.voting button:hover{
+
+.voting button:hover {
     background-color: Transparent;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
     border: none;
-    cursor:pointer;
+    cursor: pointer;
     overflow: hidden;
-    outline:none;
+    outline: none;
     text-shadow: 0px 5px 5px rgba(100, 100, 100, 0.9);
 }
+
 .container {
     width: 90%;
     min-height: 650px;
@@ -265,7 +288,7 @@ progress::-webkit-progress-value {
 }
 
 .searchWrapper button:hover {
-    background: url(../_img/searchActive.png) no-repeat center center;
+    /*background: url(../_img/searchActive.png) no-repeat center center;*/
 }
 
 
@@ -285,7 +308,7 @@ progress::-webkit-progress-value {
     border-radius: 5px 5px 5px 5px;
     font-size: 14px;
     background-color: DarkSlateBlue;
-    background-image: url('../_img/searchIcon.png');
+    /*background-image: url('../_img/searchIcon.png');*/
     background-position: 5px 5px;
     background-repeat: no-repeat;
     -webkit-transition: width 0.4s ease-in-out;
@@ -299,7 +322,8 @@ progress::-webkit-progress-value {
 }
 
 .searchHeader input:hover:not(:focus) {
-    background: url(../_img/searchIconAcive.png) no-repeat center center;
+    /*background: url(../_img/searchIconAcive.png) no-repeat center center;
+    */
     cursor: pointer;
 }
 
@@ -319,14 +343,15 @@ progress::-webkit-progress-value {
 
 .smiles {
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     margin-left: 100px;
     margin-right: 100px;
-    
 }
-.smiles i{
+
+.smiles i {
     font-size: 30px;
 }
+
 
 /* Opinion card */
 
@@ -343,23 +368,42 @@ progress::-webkit-progress-value {
 
 /* Graph card */
 
+
+/*
 .graph {
     width: 40%;
     height: 100px;
     margin-top: 10px;
     margin-bottom: 10px;
-    display: flex;
-    align-items: flex-start;
+    display: inline-block;
+    align-items: left;
     background-color: lavender;
+}
+*/
+
+.grid {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /*padding: 1em;
+    margin: 1em auto;*/
+}
+
+.grid:after {
+    content: "";
+    flex: auto;
+}
+
+.graph {
+    height: 200px;
+    width: 45%;
+    /*padding: 0.5em;*/
+    box-sizing: border-box;
 }
 
 .graph:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}
-
-.graph h3 {
-    bottom: 0;
-    background-color: aliceblue;
 }
 
 .graph image {
@@ -368,8 +412,9 @@ progress::-webkit-progress-value {
 
 .graph .container {
     min-height: 10px;
+    height: 100px;
+    width: 100%;
     text-align: left;
-    padding: 2px 16px;
 }
 
 
@@ -472,7 +517,98 @@ progress::-webkit-progress-value {
     background-color: #5cb85c;
     color: white;
 }
+
+
 /*--------------------------*/
+
+
+/* Grids */
+
+.band {
+    width: 90%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-gap: 20px;
+}
+
+@media only screen and (min-width: 500px) {
+    .band {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media only screen and (min-width: 850px) {
+    .band {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    #tabPanel1 .band {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+
+/* card */
+
+.poster {
+    min-height: 100%;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: #444;
+    position: relative;
+    top: 0;
+    transition: all .1s ease-in;
+}
+
+.poster:hover {
+    top: -2px;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+}
+
+.poster article {
+    padding: 20px;
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.poster .thumb {
+    min-height: 100px;
+    height: 200px;
+    background-size: cover;
+    background-position: center center;
+}
+
+.poster p {
+    flex: 1;
+    /* make p grow to fill available space*/
+    line-height: 1.4;
+}
+
+
+/* typography */
+
+.poster h1 {
+    font-size: 20px;
+    margin: 0;
+    color: #333;
+}
+
+.poster span {
+    font-size: 12px;
+    font-weight: bold;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin: 2em 0 0 0;
+}
+
 
 /*tab styles*/
 
@@ -522,7 +658,7 @@ progress::-webkit-progress-value {
 }
 
 #containers {
-    background: white;
+    background: WhiteSmoke;
     margin: 0 auto;
     min-height: 100px;
     border-radius: 0 0 5px 5px;
@@ -544,4 +680,80 @@ progress::-webkit-progress-value {
 
 #HCB_comment_box h3 {
     color: white;
+}
+
+#HCB_comment_box textarea {}
+
+#HCB_comment_box {}
+
+#HCB_comment_box p.error {
+    border: 4px solid #f88;
+    background-color: #fee;
+    color: #800;
+}
+
+#HCB_comment_box textarea,
+#HCB_comment_box input.text {
+    border: 1px solid #ddd;
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    background: url(bg.png) repeat-x;
+}
+
+#HCB_comment_box .hcb-wrapper-half {
+    display: block;
+    width: 50%;
+    float: left;
+}
+
+#HCB_comment_box .hcb-wrapper {
+    clear: both;
+    margin-bottom: 0.5em;
+}
+
+#HCB_comment_box input.text {
+    display: block;
+    width: 97%;
+}
+
+#HCB_comment_box input.submit {
+    margin: 0 7px 3px 0;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+    font-size: 100%;
+    line-height: 130%;
+    text-decoration: none;
+    font-weight: bold;
+    color: #565656;
+    cursor: pointer;
+    width: auto;
+    overflow: visible;
+    padding: 4px 10px 3px 7px;
+}
+
+#HCB_comment_box input.submit:hover {
+    background-color: #dff4ff;
+    border: 1px solid #c2e1ef;
+    color: #336699;
+}
+
+#HCB_comment_box span.home-desc {
+    opacity: 0.4;
+}
+
+#HCB_comment_box div.comment {
+    border-top: 1px solid #eee;
+    margin-bottom: 0.5em;
+}
+
+.hcb-mod b {
+    color: darkblue;
+}
+
+.hcb-link {
+    color: blue;
+    text-decoration: underline;
 }

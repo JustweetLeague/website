@@ -1,0 +1,22 @@
+<div id="card" class="grid">
+                            <div class="card graph" id="timeDiagram">
+                                <div class="container">
+                                    <p>Distribution of tweets about the news in time</p>
+                                </div>
+                            </div>
+                            <div class="card graph" id="radDiagram">
+                                {% load static %}
+                                <img src="{% static '_img/placeholder.png' %}" alt="Radial diagram" style="width:80%; height:50%">
+                                <div class="container">
+                                    <p>Radial diagram showing how much different factors affected the decision that the statement is 'fake'</p>
+                                </div>
+                            </div>
+                            <div class="card graph" id="mapDiagram">
+                                {% load static %}
+                                <img src="{% static '_img/placeholder.png' %}" alt="Radial diagram" style="width:80%; height:50%">
+                                <div class="container">
+                                    <p>Map of statement spreading (if we have enough content on geolocation)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
