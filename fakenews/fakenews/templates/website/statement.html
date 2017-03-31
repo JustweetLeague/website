@@ -1,0 +1,269 @@
+{% extends "base.html" %} {% block content %} {% load static from staticfiles %}
+<header role=“banner”>
+    <h1><a href="{% url 'index' %}">Check fake news</a></h1>
+    <form action="{% url 'search'" class="searchHeader">
+        <input type="text" name="search">
+    </form>
+</header>
+<main role=“main” class="container">
+    <article>
+        <div>
+            {% if item.fakeness == 4 %}
+            <section class="card decision" style="background-color: #ff5d55 ">
+                <h3>Our decision</h3>
+                <p>{{item.title}} is almost surely fake</p>
+                <div class="smiles">
+                    <i class="material-icons" style="color: yellow">sentiment_very_dissatisfied</i>
+                    <i class="material-icons">sentiment_dissatisfied</i>
+                    <i class="material-icons">sentiment_neutral</i>
+                    <i class="material-icons">sentiment_satisfied</i>
+                    <i class="material-icons">sentiment_very_satisfied</i>
+                </div>
+            </section>
+            {% elif item.fakeness == 3 %}
+            <section class="card decision" style="background-color: #ff8a84 ">
+                <h3>Our decision</h3>
+                <p>{{item.title}} is probably fake</p>
+                <div class="smiles">
+                    <i class="material-icons">sentiment_very_dissatisfied</i>
+                    <i class="material-icons" style="color: yellow">sentiment_dissatisfied</i>
+                    <i class="material-icons">sentiment_neutral</i>
+                    <i class="material-icons">sentiment_satisfied</i>
+                    <i class="material-icons">sentiment_very_satisfied</i>
+                </div>
+            </section>
+            {% elif item.fakeness == 2 %}
+            <section class="card decision" style="background-color: #ffc957 ">
+                <h3>Our decision</h3>
+                <p>{{item.title}} cannot be certainly identified </p>
+                <div class="smiles">
+                    <i class="material-icons">sentiment_very_dissatisfied</i>
+                    <i class="material-icons">sentiment_dissatisfied</i>
+                    <i class="material-icons" style="color: yellow">sentiment_neutral</i>
+                    <i class="material-icons">sentiment_satisfied</i>
+                    <i class="material-icons">sentiment_very_satisfied</i>
+                </div>
+            </section>
+            {% elif item.fakeness == 1 %}
+            <section class="card decision" style="background-color: #92d36e ">
+                <h3>Our decision</h3>
+                <p>{{item.title}} is probably true</p>
+                <div class="smiles">
+                    <i class="material-icons">sentiment_very_dissatisfied</i>
+                    <i class="material-icons">sentiment_dissatisfied</i>
+                    <i class="material-icons">sentiment_neutral</i>
+                    <i class="material-icons" style="color: yellow">sentiment_satisfied</i>
+                    <i class="material-icons">sentiment_very_satisfied</i>
+                </div>
+            </section>
+            {% elif item.fakeness == 0 %}
+            <section class="card decision" style="background-color: #72bb53 ">
+                <h3>Our decision</h3>
+                <p>{{item.title}} is almost surely true</p>
+                <div class="smiles">
+                    <i class="material-icons">sentiment_very_dissatisfied</i>
+                    <i class="material-icons">sentiment_dissatisfied</i>
+                    <i class="material-icons">sentiment_neutral</i>
+                    <i class="material-icons">sentiment_satisfied</i>
+                    <i class="material-icons" style="color: yellow">sentiment_very_satisfied</i>
+                </div>
+            </section>
+            {% endif %}
+        </div>
+        <section class="card opinion">
+            <h3>What other users think</h3> {% if item.usersvote > 0 %}
+            <p>{{ item.usersvoteFake }} out of {{ item.usersvote }} people believe this news is fake</p>
+            <div class="voting">
+                <button id="more">Fake
+                    <br><i class="material-icons" style="color: #CC0000">thumb_down</i></button>
+                <progress value="{{ item.usersvoteFake }}" max="{{ item.usersvote }}"></progress>
+                <button id="less">True
+                    <br><i class="material-icons" style="color: #86CC00">thumb_up</i></button>
+            </div>
+            {% else %}
+            <p> No users have yet voted. <br> Vote: </p>
+            <div class="voting">
+                <button id="more">Fake
+                    <br><i class="material-icons" style="color: #CC0000">thumb_down</i></button>
+                <button id="less">True
+                    <br><i class="material-icons" style="color: #86CC00">thumb_up</i></button>
+            </div>
+            {% endif %}
+        </section>
+        <section class="card subsections">
+            <div id="tabContainer">
+                <div id="tabs">
+                    <ul>
+                        <li id="tab1"><a href="#tabPanel1">Additional Info</a></li>
+                        <li id="tab2"><a href="#tabPanel2">Relevant Articles</a></li>
+                        <li id="tab3"><a href="#tabPanel3">Related Tweets</a></li>
+                        <li id="tab4"><a href="#tabPanel4">User Comments</a></li>
+                    </ul>
+                </div>
+                <div id="containers">
+                    <div class="tab" id="tabPanel1">
+                        <p> &nbsp; </p>
+                        <div id="card">
+                            <div class="card graph">
+                                <img src="_img/placeholder.png" alt="Avatar" style="width:80%; height:50%">
+                                <div class="container">
+                                    <h5>Geography</h5>
+                                </div>
+                            </div>
+                            {% block addinfo %} {% endblock %}
+                        </div>
+                    </div>
+                    <div class="tab" id="tabPanel2">
+                        <p>articles</p>
+                    </div>
+                    <div class="tab" id="tabPanel3">
+                        <p>twees</p>
+                    </div>
+                    <div class="tab" id="tabPanel4">
+                        <!-- begin wwww.htmlcommentbox.com -->
+                        <div id="HCB_comment_box">
+                            <a href="http://www.htmlcommentbox.com">Widget</a> is loading comments...
+                        </div>
+                        <style>
+                        #HCB_comment_box textarea {}
+                        
+                        #HCB_comment_box {}
+                        
+                        #HCB_comment_box p.error {
+                            border: 4px solid #f88;
+                            background-color: #fee;
+                            color: #800;
+                        }
+                        
+                        #HCB_comment_box textarea,
+                        #HCB_comment_box input.text {
+                            border: 1px solid #ddd;
+                            border-left: 1px solid #ccc;
+                            border-top: 1px solid #ccc;
+                            background: url(bg.png) repeat-x;
+                        }
+                        
+                        #HCB_comment_box .hcb-wrapper-half {
+                            display: block;
+                            width: 50%;
+                            float: left;
+                        }
+                        
+                        #HCB_comment_box .hcb-wrapper {
+                            clear: both;
+                            margin-bottom: 0.5em;
+                        }
+                        
+                        #HCB_comment_box input.text {
+                            display: block;
+                            width: 97%;
+                        }
+                        
+                        #HCB_comment_box input.submit {
+                            margin: 0 7px 3px 0;
+                            background-color: #f5f5f5;
+                            border: 1px solid #ccc;
+                            border-top: 1px solid #ddd;
+                            border-left: 1px solid #ddd;
+                            font-family: "Lucida Grande", Tahoma, Arial, Verdana, sans-serif;
+                            font-size: 100%;
+                            line-height: 130%;
+                            text-decoration: none;
+                            font-weight: bold;
+                            color: #565656;
+                            cursor: pointer;
+                            width: auto;
+                            overflow: visible;
+                            padding: 4px 10px 3px 7px;
+                        }
+                        
+                        #HCB_comment_box input.submit:hover {
+                            background-color: #dff4ff;
+                            border: 1px solid #c2e1ef;
+                            color: #336699;
+                        }
+                        
+                        #HCB_comment_box span.home-desc {
+                            opacity: 0.4;
+                        }
+                        
+                        #HCB_comment_box div.comment {
+                            border-top: 1px solid #eee;
+                            margin-bottom: 0.5em;
+                        }
+                        
+                        .hcb-mod b {
+                            color: darkblue;
+                        }
+                        
+                        .hcb-link {
+                            color: blue;
+                            text-decoration: underline;
+                        }
+                        </style>
+                        <script type="text/javascript" id="hcb">
+                        /*<!--*/
+                        if (!window.hcb_user) {
+                            hcb_user = {};
+                        }(function() {
+                            var s = document.createElement("script"),
+                                l = hcb_user.PAGE || ("" + window.location).replace(/'/g, "%27"),
+                                h = "//www.htmlcommentbox.com";
+                            s.setAttribute("type", "text/javascript");
+                            s.setAttribute("src", h + "/jread?page=" + encodeURIComponent(l).replace("+", "%2B") + "&mod=%241%24wq1rdBcg%24fKggIQu.sMiyih691BVbc1" + "&opts=16862&num=10&ts=1490540267994");
+                            if (typeof s != "undefined") document.getElementsByTagName("head")[0].appendChild(s);
+                        })();
+                        </script>
+                        <!-- end www.htmlcommentbox.com -->
+                    </div>
+                </div>
+            </div>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Modal Header</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>Some text in the Modal Body</p>
+                        <p>Some other text...</p>
+                    </div>
+                    <div class="modal-footer">
+                        <h3>Modal Footer</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+</main>
+<footer role=“contentinfo”>
+    <p>Don't have our plugin yet?
+        <br> Download it <a href="index.htm">here</a>!</p>
+    <p>&copy;JustweetLeague 2017</p>
+</footer>
+<script>
+// Get the modal 
+var modal = document.getElementById('myModal'); // Get the button that opens the modal 
+var btn = document.getElementById("card"); // Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+{% endblock content %}

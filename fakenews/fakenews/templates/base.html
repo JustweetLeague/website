@@ -1,0 +1,18 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<htlm lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Check Fake News</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'styles.css'%}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+
+    <body>
+        {% block content %} {% endblock content %}
+        <script type="text/javascript" src="{% static 'tabs.js' %}"></script>
+    </body>
+</htlm>
