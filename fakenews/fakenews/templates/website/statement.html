@@ -1,12 +1,13 @@
 {% extends "base.html" %} {% block content %}
 <header role=“banner”>
     <h1><a href="{% url 'index' %}">Check fake news</a></h1>
-    <form action="{% url 'search' %}" class="searchHeader">
-        <input type="text" name="search">
+    <form action="{% url 'search' %}" class="searchHeader" method="POST">
+        {% csrf_token %} {{ form }}
+        <input type="text" placeholder="">
     </form>
 </header>
-<main role=“main” class="container">
-    <article>
+<main role=“main”>
+    <article class="content">
         <div>
             {% if item.fakeness == 4 %}
             <section class="card decision" style="background-color: #ff5d55 ">
@@ -198,9 +199,7 @@
                     </div>
                 </div>
             </div>
-
             <!-- The Modals -->
-
             <div id="myModal" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
@@ -217,7 +216,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="myModal-2" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
@@ -234,7 +232,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="myModal-3" class="modal">
                 <!-- Modal content -->
                 <div class="modal-content">
@@ -251,16 +248,13 @@
                     </div>
                 </div>
             </div>
-
         </section>
     </article>
 </main>
 <footer role=“contentinfo”>
     <p>Don't have our plugin yet?
         <br> Download it <a href="index.htm">here</a>!</p>
-    <p>&copy;JustweetLeague 2017</p>
 </footer>
-
 <script>
 // Get the modal 
 var modal = document.getElementById('myModal'); // Get the button that opens the modal 
@@ -284,4 +278,6 @@ window.onclick = function(event) {
     }
 }
 </script>
+<script type="text/javascript" src="{% static 'tabs.js' %}"></script>
+
 {% endblock content %}

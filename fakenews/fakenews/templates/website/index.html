@@ -1,20 +1,20 @@
 {% extends "base.html" %} {% block content %}
-<main role=“main”>
-    <article class="home">
-        <section>
-            <h1><a href="{% url 'index' %}">Check fake news</a></h1>
-            <h2>Find out if the news is fake! </h2>
-        </section>
-        <section>
-            <form action="{% url 'statements' %}" class="searchWrapper" method="POST">
-                <input type="search" placeholder="Statement / hashtag / theme">
-                <button type="submit"> Search </button>
-            </form>
-        </section>
-        <section>
-            <h3><strong>Warning</strong>: The information provided is not 100% correct </h3>
-            <p>Don't have our plugin yet? <br> Download it <a href="{% url 'index' %}">here</a>!</p>
-        </section>
-    </article>
-</main>
+<article class="home">
+    <section>
+        <h1><a href="{% url 'index' %}">Check fake news</a></h1>
+        <h2>Find out if the news is fake! </h2>
+    </section>
+    <section>
+        <form action="{% url 'search' %}" class="searchWrapper" method="POST">
+            {% csrf_token %} {{ form }}
+            <input type="text" placeholder="Statement / hashtag / theme">
+            <button type="submit"> Search </button>
+        </form>
+    </section>
+    <section>
+        <h3><strong>Warning</strong>: The information provided is not 100% correct </h3>
+        <p>Don't have our plugin yet?
+            <br> Download it <a href="{% url 'index' %}">here</a>!</p>
+    </section>
+</article>
 {% endblock content %}

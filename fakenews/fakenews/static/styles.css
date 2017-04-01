@@ -31,6 +31,11 @@ body {
     width: 100%;
     margin: auto;
     line-height: 1.8;
+
+    /* making footer main and header work together */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 strong {
@@ -56,10 +61,6 @@ h3 {
     margin: auto;
 }
 
-.home h3 {
-    padding: 10px 10px 200px 10px;
-}
-
 p {
     margin-bottom: 1em;
 }
@@ -82,42 +83,86 @@ a:hover {
     text-align: center;
 }
 
-header {
-    width: 100%;
-    background-color: DarkSlateBlue;
-    box-shadow: 0px 3px 5px rgba(100, 100, 100, 0.49);
-    top: 0;
-    position: absolute;
+header{
+   /* We want the header to have a static height, 
+   it will always take up just as much space as it needs.  */
+   /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+   flex: 0 0 auto;
+   display: flex;
+   background-color: DarkSlateBlue;
+   height: 45px;
 }
-
 header h1 {
     font-size: 1.2em;
-    padding: 10px 0px 10px 10px;
-    float: left;
+    padding: 5px 0px 5px 5px;
 }
 
 header .searchWrapper {
     width: 50%;
     padding: 5px 0px 5px 0px;
-    float: right;
 }
 
-footer {
-    width: 100%;
+main{
+   /* By setting flex-grow to 1, the main content will take up 
+   all of the remaining space on the page. 
+   The other elements have flex-grow: 0 and won't contest the free space. */
+   /* 1 flex-grow, 0 flex-shrink, auto flex-basis */
+   flex: 1 0 auto;
+}
+.content {
+    width: 80%;
+    margin: 0 auto;
+    background-color: gold;
+    height: 100%;
+    padding: 10px 30px;
+    border-radius: 0px 0px 50px 50px;
+}
+
+footer{
+   /* Like the header, the footer will have a static height - it shouldn't grow or shrink.  */
+   /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
+   flex: 0 0 auto;
     background-color: DarkSlateBlue;
     text-align: center;
-    font-size: .8em;
-    position: relative;
-    bottom: 0;
-    left: 0;
     padding-bottom: 10px;
     padding-top: 10px;
 }
-
 footer p {
-    line-height: 1;
     color: white;
 }
+/* Homepage */
+.home {
+    width: 90%;
+    margin: auto;
+    text-align: center;
+}
+
+.home h1 {
+    font-size: 3em;
+    text-align: center;
+    padding: 1em;
+}
+
+.home h2 {
+    text-align: center;
+    font-style: italic;
+}
+.home h3 {
+    margin: auto;
+    padding-top: 10px;
+    clear: both;
+    padding: 10px 10px 200px 10px;
+}
+.home p {
+    text-align: center;
+}
+
+.home .searchWrapper {
+    width: 100%;
+    margin: auto;
+    padding: 30px 10px 30px 10px;
+}
+
 
 
 /* All Progress Bars */
@@ -186,57 +231,13 @@ progress::-webkit-progress-value {
     text-shadow: 0px 5px 5px rgba(100, 100, 100, 0.9);
 }
 
-.container {
-    width: 90%;
-    min-height: 650px;
-    background: white;
-    margin: auto;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 40px 0 10px 0;
-    box-shadow: 0px 3px 5px rgba(100, 100, 100, 0.49);
-}
-
-.home {
-    width: 90%;
-    margin: auto;
-}
-
-.home h1 {
-    font-size: 3em;
-    text-align: center;
-    padding: 1em;
-}
-
-.home h2 {
-    text-align: center;
-    font-style: italic;
-}
-
-.home .searchWrapper {
-    width: 100%;
-    margin: auto;
-    padding: 30px 10px 30px 10px;
-}
-
-.home h3 {
-    margin: auto;
-    padding-top: 10px;
-    clear: both;
-}
-
-.home p {
-    text-align: center;
-}
-
-
 /* search bar */
 
 
 /* Form wrapper styling */
 
 .searchWrapper {
-    width: 600px;
+    /*width: 600px;*/
     margin: 0 auto;
     text-align: center;
     padding: 10px 10px 10px 10px;
@@ -248,20 +249,23 @@ progress::-webkit-progress-value {
 .searchWrapper input {
     width: 100%;
     height: 40px;
-    margin: 0 auto;
-    padding: 10px 50px 10px 10px;
+    /*margin: 0 auto;
+    padding: 10px 50px 10px 10px;*/
     font-size: 15px;
     border: 0;
     background: #EEE;
     border-radius: 5px 5px 5px 5px;
-    box-shadow: 0px 3px 5px rgba(100, 100, 100, 0.49);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: scroll;
 }
 
+.searchWrapper input:hover {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+}
 .searchWrapper input:focus {
     outline: 0;
     background: #fff;
-    box-shadow: 0 0 2px rgba(0, 0, 0, .8) inset;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2) inset;
 }
 
 .searchWrapper button {
@@ -270,11 +274,11 @@ progress::-webkit-progress-value {
     height: 40px;
     margin: 0 auto;
     margin-top: 10px;
-    padding: 10px 10px 10px 10px;
+    /*padding: 10px 10px 10px 10px;*/
     font-size: 15px;
     border: 0;
     border-radius: 5px 5px 5px 5px;
-    box-shadow: 0px 3px 5px rgba(100, 100, 100, 0.49);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: azure;
 }
 
@@ -288,7 +292,7 @@ progress::-webkit-progress-value {
 }
 
 .searchWrapper button:hover {
-    /*background: url(../_img/searchActive.png) no-repeat center center;*/
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -308,22 +312,22 @@ progress::-webkit-progress-value {
     border-radius: 5px 5px 5px 5px;
     font-size: 14px;
     background-color: DarkSlateBlue;
-    /*background-image: url('../_img/searchIcon.png');*/
+    background-image: url('_img/searchIconh1.png');
     background-position: 5px 5px;
     background-repeat: no-repeat;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
+    outline: none;
 }
 
-.searchHeader input[type=text]:focus {
+.searchHeader input:focus {
     width: 400px;
-    background-color: snow;
+    background-color: white;
     padding: 10px 20px 10px 40px;
 }
 
 .searchHeader input:hover:not(:focus) {
-    /*background: url(../_img/searchIconAcive.png) no-repeat center center;
-    */
+    background: url('_img/searchIconhover.png') no-repeat center center;
     cursor: pointer;
 }
 
@@ -334,7 +338,10 @@ progress::-webkit-progress-value {
     margin: 20px 10px auto;
     border-radius: 3px 3px 3px 3px;
     padding: 1.2em 1.2em 1.2em 1.2em;
-    box-shadow: 0px 3px 5px rgba(100, 100, 100, 0.49);
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.card:hover {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
 
 .decision {
@@ -364,22 +371,14 @@ progress::-webkit-progress-value {
     background-color: lightblue;
     margin-bottom: 20px;
 }
+.subsections li {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.4;
+}
 
 
 /* Graph card */
-
-
-/*
-.graph {
-    width: 40%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: inline-block;
-    align-items: left;
-    background-color: lavender;
-}
-*/
 
 .grid {
     width: 100%;
