@@ -1,5 +1,5 @@
 html {
-    background: #5e9bff;
+    background: #BECEED;
 }
 
 h1,
@@ -89,7 +89,8 @@ header{
    /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
    flex: 0 0 auto;
    display: flex;
-   background-color: DarkSlateBlue;
+   background-color: #554640;
+   /*DarkSlateBlue;*/
    height: 45px;
 }
 header h1 {
@@ -112,7 +113,7 @@ main{
 .content {
     width: 80%;
     margin: 0 auto;
-    background-color: gold;
+    background-color: rgba(255,255,255, 0.7); 
     height: 100%;
     padding: 10px 30px;
     border-radius: 0px 0px 50px 50px;
@@ -121,15 +122,13 @@ main{
 footer{
    /* Like the header, the footer will have a static height - it shouldn't grow or shrink.  */
    /* 0 flex-grow, 0 flex-shrink, auto flex-basis */
-   flex: 0 0 auto;
-    background-color: DarkSlateBlue;
+    flex: 0 0 auto;
+    /*DarkSlateBlue;*/
     text-align: center;
     padding-bottom: 10px;
     padding-top: 10px;
 }
-footer p {
-    color: white;
-}
+
 /* Homepage */
 .home {
     width: 90%;
@@ -196,13 +195,13 @@ progress:not([value]) {
 }
 
 progress::-webkit-progress-bar {
-    background: #86CC00;
+    background: #72bb53;
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
     border-radius: 3px;
 }
 
 progress::-webkit-progress-value {
-    background-color: #CC0000;
+    background-color: #e2041a;
     border-radius: 3px;
 }
 
@@ -253,7 +252,7 @@ progress::-webkit-progress-value {
     padding: 10px 50px 10px 10px;*/
     font-size: 15px;
     border: 0;
-    background: #EEE;
+    background: white;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: scroll;
@@ -274,7 +273,6 @@ progress::-webkit-progress-value {
     height: 40px;
     margin: 0 auto;
     margin-top: 10px;
-    /*padding: 10px 10px 10px 10px;*/
     font-size: 15px;
     border: 0;
     border-radius: 5px 5px 5px 5px;
@@ -283,11 +281,8 @@ progress::-webkit-progress-value {
 }
 
 .searchWrapper button {
-    /*position: relative;*/
     padding: 6px 15px;
-    /*left: -8px;*/
-    border: 2px solid #207cca;
-    background-color: #207cca;
+    background-color: #9FA6BF;
     color: #fafafa;
 }
 
@@ -336,18 +331,20 @@ progress::-webkit-progress-value {
 
 .card {
     margin: 20px 10px auto;
+    border: 10px solid lightblue;
     border-radius: 3px 3px 3px 3px;
     padding: 1.2em 1.2em 1.2em 1.2em;
-     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: lightblue;
 }
 .card:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
-
+/*
 .decision {
-    background-color: coral;
+    background-color: lightblue;
 }
-
+*/
 .smiles {
     display: flex;
     justify-content: space-between;
@@ -361,20 +358,86 @@ progress::-webkit-progress-value {
 
 
 /* Opinion card */
-
+/*
 .opinion {
-    background-color: lightcyan;
+    background-color: lightblue;
 }
-
+*/
+/* Additional info card with subsections */
 .subsections {
     font-size: .8em;
-    background-color: lightblue;
+    /*background-color: lightblue;*/
     margin-bottom: 20px;
 }
 .subsections li {
     text-align: center;
     font-size: 16px;
     line-height: 1.4;
+}
+
+/* Tweet card */
+.hidden {
+    display: none;
+}
+
+.tweet {
+    margin-top: 0;
+    margin-left: 50px;
+    width: 500px;
+    min-height: 65px;
+    display:flex;
+    flex-flow: row;
+    padding: 3px;
+    background-color: white;
+ 
+}
+.tweet p {
+   text-align: left;
+}
+.tweet_image {
+    width: 48px;
+    height: 48px;
+    padding: 8px 0 0 5px;
+}
+.tweet_image img {
+    width: 48px;
+    height: 48px;
+    padding: 8px 0 0 5px;
+    border: none;
+}
+.tweet_right {
+    width: 430px;
+    display:flex;
+    flex-flow: column;
+    padding-right: 5px;
+}
+
+.tweet_screen_name a {
+    font-size: 110%;
+    font-weight: bold;
+    text-align:center;
+    color:#2EB2E9;
+    text-decoration: none;
+}
+.tweet_name {
+    font-size: 100%;
+    color: #808080;
+    padding-left: 10px;
+}
+.tweet_date {
+    font-size: 80%;
+    color: #808080;
+    margin-top: 2px;
+    text-decoration: none;
+}
+.tweet_text {
+    font-size: 100%;
+}
+.tweet_text a {
+    text-decoration: none;
+}
+.tweet_text a:hover {
+    text-decoration: underline;
 }
 
 

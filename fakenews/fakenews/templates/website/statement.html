@@ -10,7 +10,7 @@
     <article class="content">
         <div>
             {% if item.fakeness == 4 %}
-            <section class="card decision" style="background-color: #ff5d55 ">
+            <section class="card decision" style="background-color: #e2041a ">
                 <h3>Our decision</h3>
                 <p>{{item.title}} is almost surely fake</p>
                 <div class="smiles">
@@ -72,39 +72,88 @@
             {% endif %}
         </div>
         <section class="card opinion">
-            <h3>What other users think</h3> {% if item.usersvote > 0 %}
-            <p>{{ item.usersvoteFake }} out of {{ item.usersvote }} people believe this news is fake</p>
-            <div class="voting">
-                <button id="more">Fake
-                    <br><i class="material-icons" style="color: #CC0000">thumb_down</i></button>
+            <h3>What other users think</h3> 
+            {% if item.usersvote > 0 %}
+                <p>{{ item.usersvoteFake }} out of {{ item.usersvote }} people believe this news is fake</p>
                 <progress value="{{ item.usersvoteFake }}" max="{{ item.usersvote }}"></progress>
-                <button id="less">True
-                    <br><i class="material-icons" style="color: #86CC00">thumb_up</i></button>
-            </div>
             {% else %}
-            <p> No users have yet voted.
-                <br> Vote: </p>
-            <div class="voting">
-                <button id="more">Fake
-                    <br><i class="material-icons" style="color: #CC0000">thumb_down</i></button>
-                <button id="less">True
-                    <br><i class="material-icons" style="color: #86CC00">thumb_up</i></button>
-            </div>
+                <p> No users have yet voted. </p>
             {% endif %}
+                <div class="voting">
+                    <p> Vote: </p>
+                    <button id="more">Fake
+                        <br><i class="material-icons" style="color: #e2041a">thumb_down</i></button>
+                    <button id="less">True
+                        <br><i class="material-icons" style="color: #72bb53">thumb_up</i></button>
+                </div>
         </section>
         <section class="card subsections">
             <div id="tabContainer">
                 <div id="tabs">
                     <ul>
-                        <li id="tab1"><a href="#tabPanel1">Additional Info</a></li>
+                        <li id="tab1"><a href="#tabPanel1">Related Tweets</a></li>
                         <li id="tab2"><a href="#tabPanel2">Relevant Articles</a></li>
-                        <li id="tab3"><a href="#tabPanel3">Related Tweets</a></li>
+                        <li id="tab3"><a href="#tabPanel3">Additional Info</a></li>
                         <li id="tab4"><a href="#tabPanel4">User Comments</a></li>
                     </ul>
                 </div>
                 <div id="containers">
-                    <!-- Additional information -->
+                    <!-- Related tweets -->
                     <div class="tab" id="tabPanel1">
+                        <p> &nbsp;</p>
+                        {% for tweet in tweets %}
+                        <p>twees</p>
+                        {% endfor %}
+                        <div id="tweet_column"> 
+                            <div class="card tweet">
+                                {% load static %}
+                                <div class="tweet_image"> <img src='{% static '_img/tweet.jpg' %}'"> </div>
+                                <div class="tweet_right">
+                                    <p> 
+                                        <span class="tweet_screen_name"><a href=""> Name{{ tweet.name }}</a></span> 
+                                        <span class="tweet_name">@tweet_name</span>
+                                        <span class="tweet_date"> time {{ tweet.date}}</span>
+                                    </p>
+                                    <div class="tweet_text"> body {{ tweet.body }}</div>
+                                </div>
+                                <i class="material-icons" id="{{ tweet.trust }}">fiber_manual_record</i>
+                            </div>
+                        </div>
+                        <p> &nbsp;</p>
+                    </div>
+                    
+                    <!-- Relevant articles -->
+                    <div class="tab" id="tabPanel2">
+                        <p> &nbsp;</p>
+                        <!-- Cards container -->
+                        <div class="band">
+                            <!-- grid item, containing a card -->
+                            <div class="item-1">
+                                <a href="http://www.bbc.co.uk/news" target="_blank" class="poster">
+                                    {% load static %}
+                                    <div class="thumb" style="background-image: url(http://www.bbc.co.uk/news/special/2015/newsspec_10857/bbc_news_logo.png);"></div>
+                                    <article>
+                                        <h2>BBC news outlet</h2>
+                                        <span>BBC news</span>
+                                    </article>
+                                </a>
+                            </div>
+                            <!-- grid item, containing a card -->
+                            <div class="item-2">
+                                <a href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045" class="poster">
+                                    <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png);"></div>
+                                    <article>
+                                        <h2>How to Conduct Remote Usability Testing</h2>
+                                        <span>Harry Brignull</span>
+                                    </article>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- ______________________ -->
+                        <p> &nbsp;</p>
+                    </div>
+                    <!-- Additional information -->
+                    <div class="tab" id="tabPanel3">
                         <!-- Cards container -->
                         <p> &nbsp;</p>
                         <div class="band">
@@ -141,40 +190,6 @@
                         </div>
                         <p> &nbsp;</p>
                         <!-- ______________________ -->
-                    </div>
-                    <!-- Relevant articles -->
-                    <div class="tab" id="tabPanel2">
-                        <p> &nbsp;</p>
-                        <!-- Cards container -->
-                        <div class="band">
-                            <!-- grid item, containing a card -->
-                            <div class="item-1">
-                                <a href="http://www.bbc.co.uk/news" target="_blank" class="poster">
-                                    {% load static %}
-                                    <div class="thumb" style="background-image: url(http://www.bbc.co.uk/news/special/2015/newsspec_10857/bbc_news_logo.png);"></div>
-                                    <article>
-                                        <h2>BBC news outlet</h2>
-                                        <span>BBC news</span>
-                                    </article>
-                                </a>
-                            </div>
-                            <!-- grid item, containing a card -->
-                            <div class="item-2">
-                                <a href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045" class="poster">
-                                    <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png);"></div>
-                                    <article>
-                                        <h2>How to Conduct Remote Usability Testing</h2>
-                                        <span>Harry Brignull</span>
-                                    </article>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ______________________ -->
-                        <p> &nbsp;</p>
-                    </div>
-                    <!-- Related tweets -->
-                    <div class="tab" id="tabPanel3">
-                        <p>twees</p>
                     </div>
                     <!-- Comments -->
                     <div class="tab" id="tabPanel4">
@@ -256,27 +271,27 @@
         <br> Download it <a href="index.htm">here</a>!</p>
 </footer>
 <script>
-// Get the modal 
-var modal = document.getElementById('myModal'); // Get the button that opens the modal 
-var btn = document.getElementById('myCard'); // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+    // Get the modal 
+    var modal = document.getElementById('myModal'); // Get the button that opens the modal 
+    var btn = document.getElementById('myCard'); // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
-}
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
         modal.style.display = "none";
     }
-}
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 <script type="text/javascript" src="{% static 'tabs.js' %}"></script>
 
