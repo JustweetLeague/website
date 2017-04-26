@@ -382,7 +382,7 @@ progress::-webkit-progress-value {
 
 .tweet {
     margin-top: 0;
-    margin-left: 50px;
+    
     width: 500px;
     min-height: 65px;
     display:flex;
@@ -759,7 +759,6 @@ progress::-webkit-progress-value {
     border: 1px solid #ddd;
     border-left: 1px solid #ccc;
     border-top: 1px solid #ccc;
-    background: url(bg.png) repeat-x;
 }
 
 #HCB_comment_box .hcb-wrapper-half {

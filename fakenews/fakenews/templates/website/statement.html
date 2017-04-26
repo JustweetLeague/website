@@ -8,6 +8,15 @@
 </header>
 <main role=“main”>
     <article class="content">
+        <!-- If comming from plugin output tweet it cam from on the top -->
+        <div>
+            {% if item.fakeness == -1 %}
+            <section class="card tweet"> 
+                <p>Text of tweet - by whom</p>
+            </section>
+            {% endif %}
+        </div>
+        <!-- Our decision if the statement is fake or true -->
         <div>
             {% if item.fakeness == 4 %}
             <section class="card decision" style="background-color: #e2041a ">
@@ -74,16 +83,22 @@
         <section class="card opinion">
             <h3>What other users think</h3> 
             {% if item.usersvote > 0 %}
-                <p>{{ item.usersvoteFake }} out of {{ item.usersvote }} people believe this news is fake</p>
-                <progress value="{{ item.usersvoteFake }}" max="{{ item.usersvote }}"></progress>
+                    <p><span id="fakeVote" >{{ item.usersvoteFake }}</span> out of <span id="totalVote">{{ item.usersvote }}</span> people believe this news is fake</p>
+                    <progress id ="progress" value="{{ item.usersvoteFake }}" max="{{ item.usersvote }}"></progress>
             {% else %}
                 <p> No users have yet voted. </p>
             {% endif %}
+            <!--
+                <div id = "votingProgress" >
+                    <p><span id="fakeVote" >0</span> out of <span id="totalVote">0</span> people believe this news is fake</p>
+                    <progress id ="progress" value=0 max=0></progress>
+                </div>
+            -->    
                 <div class="voting">
                     <p> Vote: </p>
-                    <button id="more">Fake
+                    <button id="fake">Fake
                         <br><i class="material-icons" style="color: #e2041a">thumb_down</i></button>
-                    <button id="less">True
+                    <button id="true">True
                         <br><i class="material-icons" style="color: #72bb53">thumb_up</i></button>
                 </div>
         </section>
@@ -292,6 +307,41 @@
             modal.style.display = "none";
         }
     }
+    /* Updating */
+    var trueV = document.getElementById('true');
+    var fakeV = document.getElementById('fake');
+    var progress = document.getElementById('progress');
+    var voting = document.getElementsByClassName("voting")[0];
+    var votingProgress = document.getElementById('votingProgress');
+    /* does not wotk if there is no voting yet */
+    /*TO DO*/
+    console.log(progress.max);
+    fakeV.onclick = function() {
+        if (progress == null ){
+
+        }
+        else {
+            progress.value += 1;
+            progress.max   += 1;
+            document.getElementById('fakeVote').innerHTML  = progress.value.toString();
+            document.getElementById('totalVote').innerHTML = progress.max;
+            voting.style.display = "none";
+        }
+    }
+
+    trueV.onclick = function() {
+        if (progress == null) {
+            votingProgress.style.display = "initial";
+        }
+        else {
+            progress.max += 1;
+            document.getElementById('totalVote').innerHTML = progress.max;
+            voting.style.display = "none";
+        }
+    }
+
+
+
 </script>
 <script type="text/javascript" src="{% static 'tabs.js' %}"></script>
 
