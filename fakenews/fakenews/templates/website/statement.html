@@ -116,22 +116,68 @@
                     <!-- Related tweets -->
                     <div class="tab" id="tabPanel1">
                         <p> &nbsp;</p>
+
                         {% for tweet in tweets %}
                         <p>twees</p>
                         {% endfor %}
-                        <div id="tweet_column"> 
-                            <div class="card tweet">
+                        <div> 
+                            <div class="tweet">
                                 {% load static %}
                                 <div class="tweet_image"> <img src='{% static '_img/tweet.jpg' %}'"> </div>
                                 <div class="tweet_right">
                                     <p> 
                                         <span class="tweet_screen_name"><a href=""> Name{{ tweet.name }}</a></span> 
-                                        <span class="tweet_name">@tweet_name</span>
+                                        <span class="tweet_name">@tweet_name</span> ∙
                                         <span class="tweet_date"> time {{ tweet.date}}</span>
                                     </p>
-                                    <div class="tweet_text"> body {{ tweet.body }}</div>
+                                    <div class="tweet_text"> Obama was a Complete Failure and The #FakeNews Media Covered for him, just like they do for All Democrats #WakeUpAmerica #MAGA {{ tweet.body }}</div>
+                                    <p class="tweet_reactions"> <i class="fa fa-reply" aria-hidden="true"></i> 30 {{ tweet.reply }} 
+                                        <i class="fa fa-retweet" aria-hidden="true"></i> 30 {{ tweet.retweet }} 
+                                        <i class="fa fa-heart" aria-hidden="true"></i> 100 {{ tweet.like }}
+                                    </p>
                                 </div>
-                                <i class="material-icons" id="{{ tweet.trust }}">fiber_manual_record</i>
+                                {%  with 3 as trust %}
+                                {%  if trust == 4 %}
+                                    <i class="material-icons" style="color: #e2041a ">fiber_manual_record</i>
+                                {% elif trust == 3 %}
+                                    <i class="material-icons" style="color: #ff8a84 ">fiber_manual_record</i>
+                                {% elif trust == 2 %}
+                                    <i class="material-icons" style="color: #ffc957 ">fiber_manual_record</i>
+                                {% elif trust == 1 %}
+                                    <i class="material-icons" style="color: #92d36e ">fiber_manual_record</i>
+                                {% elif trust == 0 %}
+                                    <i class="material-icons" style="color: #72bb53 ">fiber_manual_record</i>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            <div class="tweet">
+                                {% load static %}
+                                <div class="tweet_image"> <img src='{% static '_img/tweet.jpg' %}'"> </div>
+                                <div class="tweet_right">
+                                    <p> 
+                                        <span class="tweet_screen_name"><a href=""> Name{{ tweet.name }}</a></span> 
+                                        <span class="tweet_name">@tweet_name</span> ∙
+                                        <span class="tweet_date"> time {{ tweet.date}}</span>
+                                    </p>
+                                    <div class="tweet_text"> 'Russian Collusion' Was Always Just #FakeNews Aimed at Denigrating Trump/Blunting His Agenda....This Combined W/#DeepState Spying = SEDITION {{ tweet.body }}</div>
+                                    <p class="tweet_reactions"> <i class="fa fa-reply" aria-hidden="true"></i> 30 {{ tweet.reply }} 
+                                        <i class="fa fa-retweet" aria-hidden="true"></i> 30 {{ tweet.retweet }} 
+                                        <i class="fa fa-heart" aria-hidden="true"></i> 100 {{ tweet.like }}
+                                    </p>
+                                </div>
+                                {%  with 4 as trust %}
+                                {%  if trust == 4 %}
+                                    <i class="material-icons" style="color: #e2041a ">fiber_manual_record</i>
+                                {% elif trust == 3 %}
+                                    <i class="material-icons" style="color: #ff8a84 ">fiber_manual_record</i>
+                                {% elif trust == 2 %}
+                                    <i class="material-icons" style="color: #ffc957 ">fiber_manual_record</i>
+                                {% elif trust == 1 %}
+                                    <i class="material-icons" style="color: #92d36e ">fiber_manual_record</i>
+                                {% elif trust == 0 %}
+                                    <i class="material-icons" style="color: #72bb53 ">fiber_manual_record</i>
+                                {% endif %}
+                                {% endwith %}
                             </div>
                         </div>
                         <p> &nbsp;</p>
@@ -340,7 +386,17 @@
         }
     }
 
+$(document).on('click','.contact',function(e) {
+    id = $(this).attr("id");
 
+    $.ajax({
+        type: "GET",
+        url: '/path/' + id,
+        success: function (result) {
+            $('.details').html(result);
+        },
+    });
+});
 
 </script>
 <script type="text/javascript" src="{% static 'tabs.js' %}"></script>

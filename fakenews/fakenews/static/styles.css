@@ -111,7 +111,7 @@ main{
    flex: 1 0 auto;
 }
 .content {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     background-color: rgba(255,255,255, 0.7); 
     height: 100%;
@@ -231,12 +231,10 @@ progress::-webkit-progress-value {
 }
 
 /* search bar */
-
-
 /* Form wrapper styling */
 
 .searchWrapper {
-    /*width: 600px;*/
+    width: 700px;
     margin: 0 auto;
     text-align: center;
     padding: 10px 10px 10px 10px;
@@ -246,7 +244,7 @@ progress::-webkit-progress-value {
 /* Form text input */
 
 .searchWrapper input {
-    width: 100%;
+    width: 500px;
     height: 40px;
     /*margin: 0 auto;
     padding: 10px 50px 10px 10px;*/
@@ -327,11 +325,11 @@ progress::-webkit-progress-value {
 }
 
 
-/* Decision card */
+/* Card */
 
 .card {
     margin: 20px 10px auto;
-    border: 10px solid lightblue;
+    border: 2px solid lightblue;
     border-radius: 3px 3px 3px 3px;
     padding: 1.2em 1.2em 1.2em 1.2em;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -340,11 +338,8 @@ progress::-webkit-progress-value {
 .card:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 }
-/*
-.decision {
-    background-color: lightblue;
-}
-*/
+
+/* Decision */
 .smiles {
     display: flex;
     justify-content: space-between;
@@ -356,17 +351,9 @@ progress::-webkit-progress-value {
     font-size: 30px;
 }
 
-
-/* Opinion card */
-/*
-.opinion {
-    background-color: lightblue;
-}
-*/
 /* Additional info card with subsections */
 .subsections {
     font-size: .8em;
-    /*background-color: lightblue;*/
     margin-bottom: 20px;
 }
 .subsections li {
@@ -379,20 +366,22 @@ progress::-webkit-progress-value {
 .hidden {
     display: none;
 }
-
 .tweet {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
     margin-top: 0;
-    
-    width: 500px;
+    width: 98%;
     min-height: 65px;
     display:flex;
     flex-flow: row;
-    padding: 3px;
     background-color: white;
- 
+    border-top: 1px ridge lightgray; 
+    border-bottom: 1px ridge lightgray;    
+    border-width: 1px;
 }
 .tweet p {
    text-align: left;
+   margin: 8px 0 0 5px;
 }
 .tweet_image {
     width: 48px;
@@ -402,36 +391,35 @@ progress::-webkit-progress-value {
 .tweet_image img {
     width: 48px;
     height: 48px;
-    padding: 8px 0 0 5px;
+    margin: 8px 0 0 5px;
     border: none;
+    border-radius: 5px;
 }
 .tweet_right {
-    width: 430px;
+    /*width: 430px;*/
     display:flex;
     flex-flow: column;
     padding-right: 5px;
 }
 
 .tweet_screen_name a {
-    font-size: 110%;
     font-weight: bold;
-    text-align:center;
-    color:#2EB2E9;
+    text-align:left;
+    color:black;
     text-decoration: none;
 }
 .tweet_name {
-    font-size: 100%;
-    color: #808080;
-    padding-left: 10px;
+    font-weight: bold;
+    color: rgb(101, 119, 134);
 }
 .tweet_date {
-    font-size: 80%;
-    color: #808080;
-    margin-top: 2px;
+    color: #657786;
     text-decoration: none;
 }
 .tweet_text {
+    text-align: left;
     font-size: 100%;
+    color: rgb(51, 51, 51);
 }
 .tweet_text a {
     text-decoration: none;
@@ -439,6 +427,10 @@ progress::-webkit-progress-value {
 .tweet_text a:hover {
     text-decoration: underline;
 }
+.tweet_reactions{
+    text-align: justify; 
+    color: rgb(170, 184, 194);
+} 
 
 
 /* Graph card */
@@ -740,6 +732,7 @@ progress::-webkit-progress-value {
     color: black;
 }
 
+/* Comment box styles */
 #HCB_comment_box h3 {
     color: white;
 }
@@ -817,4 +810,7 @@ progress::-webkit-progress-value {
 .hcb-link {
     color: blue;
     text-decoration: underline;
+}
+.hcb-icon {
+    display: none;
 }
