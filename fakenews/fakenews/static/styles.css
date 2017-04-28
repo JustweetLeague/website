@@ -113,6 +113,7 @@ a:hover {
 }
 .home input {
     color: grey;
+    padding-left: 20px;
 }
 .positioned {
   position: fixed;
@@ -151,16 +152,16 @@ a:hover {
     color:white;
 }
 .sresultsHeader ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-  color: rgba(214, 219, 219,0.8);
+    color: rgba(214, 219, 219,0.8);
 }
 .sresultsHeader ::-moz-placeholder { /* Firefox 19+ */
-  color: rgba(214, 219, 219,0.8);
+    color: rgba(214, 219, 219,0.8);
 }
 .sresultsHeader :-ms-input-placeholder { /* IE 10+ */
-  color: rgba(214, 219, 219,0.8);
+    color: rgba(214, 219, 219,0.8);
 }
 .sresultsHeader :-moz-placeholder { /* Firefox 18- */
-  color: rgba(214, 219, 219,0.8);
+    color: rgba(214, 219, 219,0.8);
 }
 
 .sresultsMain {
@@ -229,7 +230,9 @@ a:hover {
     margin-left: 40px;
     height: 80px;
 }
-
+.statementHeader form{
+    margin-left: 850px;
+}
 .statementHeader ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: rgba(214, 219, 219,0.8);
 }
