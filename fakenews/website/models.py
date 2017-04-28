@@ -7,5 +7,6 @@ class Statement(models.Model):
 	description = models.TextField()
 	fakeness = models.IntegerField()
 	usersvoteFake = models.IntegerField()
+	usersvoteTrue = models.IntegerField()
 	usersvote = models.IntegerField()
 	

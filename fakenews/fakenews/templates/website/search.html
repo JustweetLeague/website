@@ -1,28 +1,32 @@
-{% extends "base.html" %} {% block content %}
-<header role=“banner”>
-    <h1><a href="{% url 'index' %}">Check fake news</a></h1>
+{% extends "base.html" %} {% block content %} {% load static %}
+<header class= "sresultsHeader" role=“banner”>
+    <section>
+        <a href="{% url 'index' %}"><img src='{% static "_img/justweetleagueAlignBG.png" %}'></a>
+    </section>
+    <section>
+        <form action="{% url 'search' %}" class="searchWrapper" method="POST">
+            {% csrf_token %} {{ form }}
+            <input type="text" placeholder="Type a statement you would like to verify...">
+        </form>
+    </section>
 </header>
-<main role=“main”>
-{% load staticfiles %}
-    <article class="content">
+<main class = 'centered sresultsMain' role=“main”>
+        <h2>"Statement"</h2>   
         <section>
-            <form action="{% url 'search' %}" class="searchWrapper" method="POST">
-                {% csrf_token %} {{ form }}
-                <input type="text" placeholder="Statement / hashtag / theme">
-                <button type="submit"> Search </button>
-            </form>
-        </section>
-        <section>
-            <h3>({{items.count}} related statements found)</h3>
             <ul>
                 {% for stat in items %}
                 <li>
-                    <a href="{% url 'statement' stat.id %}" title="statement">{{ stat.title | capfirst}}
-                            </a>
+                    <a href="{% url 'statement' stat.id %}" title="statement">{{ stat.title | capfirst}}</a>
                 </li>
                 {% endfor %}
             </ul>
         </section>
-    </article>
+        <h3>{{items.count}} related statements found</h3>
 </main>
+<footer class= "bottomed sresultsFooter">
+    <section class="pluginInfo">
+        <p>Don't have our plugin yet?
+            <br> Download it <a href="{% url 'index' %}">here</a>!</p>
+    </section>
+</footer>
 {% endblock content %}

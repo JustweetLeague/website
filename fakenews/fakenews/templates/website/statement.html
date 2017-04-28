@@ -1,13 +1,23 @@
 {% extends "base.html" %} {% block content %}
-<header role=“banner”>
-    <h1><a href="{% url 'index' %}">Check fake news</a></h1>
-    <form action="{% url 'search' %}" class="searchHeader" method="POST">
+{% load static %}{% load website_extras %}
+<header class="statementHeader" role=“banner”>
+        {% with "_img/justweetleague"|addstr:item.fakeness|addstr:".png" as imagePath %}
+        <a href="{% url 'index' %}"><img src={% static imagePath %}></a>
+        {%endwith%}
+    <form action="{% url 'search' %}" class="searchWrapper" method="POST">
         {% csrf_token %} {{ form }}
-        <input type="text" placeholder="">
+        <input type="text" placeholder="Type a statement you would like to verify...">
     </form>
 </header>
-<main role=“main”>
-    <article class="content">
+<main class = "statementMain" role=“main”>
+    <div class="mainAside">
+        <img src='{% static "_img/justweet.png" %}'>
+        <section>
+            <p>Don't have our plugin yet?
+            <br> Download it <a href="{% url 'index' %}">here</a>!</p>
+        </section>
+    </div>
+    <div class="mainContent">
         <!-- If comming from plugin output tweet it cam from on the top -->
         <div>
             {% if item.fakeness == -1 %}
@@ -17,74 +27,33 @@
             {% endif %}
         </div>
         <!-- Our decision if the statement is fake or true -->
-        <div>
-            {% if item.fakeness == 4 %}
-            <section class="card decision" style="background-color: #e2041a ">
-                <h3>Our decision</h3>
-                <p>{{item.title}} is almost surely fake</p>
-                <div class="smiles">
-                    <i class="material-icons" style="color: yellow">sentiment_very_dissatisfied</i>
-                    <i class="material-icons">sentiment_dissatisfied</i>
-                    <i class="material-icons">sentiment_neutral</i>
-                    <i class="material-icons">sentiment_satisfied</i>
-                    <i class="material-icons">sentiment_very_satisfied</i>
+        <div class="decision">
+            <section class="card">
+            {% with i=item.fakeness %}
+                {% with "_img/smilesC"|addstr:i|addstr:".png" as imagePlace %}
+                <img src='{% static imagePlace %}'>
+                {% endwith %}
+                <div class="text">
+                    <h3>{{item.title}}</h3>
+                    <p> {{ decisions|index:i }}</p>
                 </div>
-            </section>
-            {% elif item.fakeness == 3 %}
-            <section class="card decision" style="background-color: #ff8a84 ">
-                <h3>Our decision</h3>
-                <p>{{item.title}} is probably fake</p>
-                <div class="smiles">
-                    <i class="material-icons">sentiment_very_dissatisfied</i>
-                    <i class="material-icons" style="color: yellow">sentiment_dissatisfied</i>
-                    <i class="material-icons">sentiment_neutral</i>
-                    <i class="material-icons">sentiment_satisfied</i>
-                    <i class="material-icons">sentiment_very_satisfied</i>
+                    {% with "smiles"|addstr:i as idName %}
+                <div class="smiles" id={{idName}}>
+                    <div id="smile0"><img src="{% static '_img/smilesBW0.png' %}"></div>
+                    <div id="smile1"><img src="{% static '_img/smilesBW1.png' %}"></div>
+                    <div id="smile2"><img src="{% static '_img/smilesBW2.png' %}"></div>
+                    <div id="smile3"><img src="{% static '_img/smilesBW3.png' %}"></div>
+                    <div id="smile4"><img src="{% static '_img/smilesBW4.png' %}"></div>
                 </div>
+                    {%endwith%}
+                {%endwith%}
             </section>
-            {% elif item.fakeness == 2 %}
-            <section class="card decision" style="background-color: #ffc957 ">
-                <h3>Our decision</h3>
-                <p>{{item.title}} cannot be certainly identified </p>
-                <div class="smiles">
-                    <i class="material-icons">sentiment_very_dissatisfied</i>
-                    <i class="material-icons">sentiment_dissatisfied</i>
-                    <i class="material-icons" style="color: yellow">sentiment_neutral</i>
-                    <i class="material-icons">sentiment_satisfied</i>
-                    <i class="material-icons">sentiment_very_satisfied</i>
-                </div>
-            </section>
-            {% elif item.fakeness == 1 %}
-            <section class="card decision" style="background-color: #92d36e ">
-                <h3>Our decision</h3>
-                <p>{{item.title}} is probably true</p>
-                <div class="smiles">
-                    <i class="material-icons">sentiment_very_dissatisfied</i>
-                    <i class="material-icons">sentiment_dissatisfied</i>
-                    <i class="material-icons">sentiment_neutral</i>
-                    <i class="material-icons" style="color: yellow">sentiment_satisfied</i>
-                    <i class="material-icons">sentiment_very_satisfied</i>
-                </div>
-            </section>
-            {% elif item.fakeness == 0 %}
-            <section class="card decision" style="background-color: #72bb53 ">
-                <h3>Our decision</h3>
-                <p>{{item.title}} is almost surely true</p>
-                <div class="smiles">
-                    <i class="material-icons">sentiment_very_dissatisfied</i>
-                    <i class="material-icons">sentiment_dissatisfied</i>
-                    <i class="material-icons">sentiment_neutral</i>
-                    <i class="material-icons">sentiment_satisfied</i>
-                    <i class="material-icons" style="color: yellow">sentiment_very_satisfied</i>
-                </div>
-            </section>
-            {% endif %}
         </div>
-        <section class="card opinion">
-            <h3>What other users think</h3> 
+        <div class="opinion">
+        <section class="card">
             {% if item.usersvote > 0 %}
-                    <p><span id="fakeVote" >{{ item.usersvoteFake }}</span> out of <span id="totalVote">{{ item.usersvote }}</span> people believe this news is fake</p>
-                    <progress id ="progress" value="{{ item.usersvoteFake }}" max="{{ item.usersvote }}"></progress>
+                    <progress id ="progress" value="{{item.usersvoteTrue}}" max="{{ item.usersvoteFake|add:item.usersvoteTrue }}"></progress>
+                    <p><span id="fakeVote" >{{ item.usersvoteFake }}</span> out of <span id="totalVote">{{ item.usersvoteFake|add:item.usersvoteTrue }}</span> people believe this news is fake</p>
             {% else %}
                 <p> No users have yet voted. </p>
             {% endif %}
@@ -96,263 +65,129 @@
             -->    
                 <div class="voting">
                     <p> Vote: </p>
-                    <button id="fake">Fake
-                        <br><i class="material-icons" style="color: #e2041a">thumb_down</i></button>
-                    <button id="true">True
-                        <br><i class="material-icons" style="color: #72bb53">thumb_up</i></button>
+                    <button id="true">TRUE</button>
+                    <button id="fake">FAKE</button>
                 </div>
         </section>
-        <section class="card subsections">
-            <div id="tabContainer">
-                <div id="tabs">
-                    <ul>
-                        <li id="tab1"><a href="#tabPanel1">Related Tweets</a></li>
-                        <li id="tab2"><a href="#tabPanel2">Relevant Articles</a></li>
-                        <li id="tab3"><a href="#tabPanel3">Additional Info</a></li>
-                        <li id="tab4"><a href="#tabPanel4">User Comments</a></li>
-                    </ul>
-                </div>
-                <div id="containers">
-                    <!-- Related tweets -->
-                    <div class="tab" id="tabPanel1">
-                        <p> &nbsp;</p>
-
-                        {% for tweet in tweets %}
-                        <p>twees</p>
-                        {% endfor %}
-                        <div> 
-                            <div class="tweet">
-                                {% load static %}
-                                <div class="tweet_image"> <img src='{% static '_img/tweet.jpg' %}'"> </div>
-                                <div class="tweet_right">
-                                    <p> 
-                                        <span class="tweet_screen_name"><a href=""> Name{{ tweet.name }}</a></span> 
-                                        <span class="tweet_name">@tweet_name</span> ∙
-                                        <span class="tweet_date"> time {{ tweet.date}}</span>
-                                    </p>
-                                    <div class="tweet_text"> Obama was a Complete Failure and The #FakeNews Media Covered for him, just like they do for All Democrats #WakeUpAmerica #MAGA {{ tweet.body }}</div>
-                                    <p class="tweet_reactions"> <i class="fa fa-reply" aria-hidden="true"></i> 30 {{ tweet.reply }} 
-                                        <i class="fa fa-retweet" aria-hidden="true"></i> 30 {{ tweet.retweet }} 
-                                        <i class="fa fa-heart" aria-hidden="true"></i> 100 {{ tweet.like }}
-                                    </p>
-                                </div>
-                                {%  with 3 as trust %}
-                                {%  if trust == 4 %}
-                                    <i class="material-icons" style="color: #e2041a ">fiber_manual_record</i>
-                                {% elif trust == 3 %}
-                                    <i class="material-icons" style="color: #ff8a84 ">fiber_manual_record</i>
-                                {% elif trust == 2 %}
-                                    <i class="material-icons" style="color: #ffc957 ">fiber_manual_record</i>
-                                {% elif trust == 1 %}
-                                    <i class="material-icons" style="color: #92d36e ">fiber_manual_record</i>
-                                {% elif trust == 0 %}
-                                    <i class="material-icons" style="color: #72bb53 ">fiber_manual_record</i>
-                                {% endif %}
-                                {% endwith %}
-                            </div>
-                            <div class="tweet">
-                                {% load static %}
-                                <div class="tweet_image"> <img src='{% static '_img/tweet.jpg' %}'"> </div>
-                                <div class="tweet_right">
-                                    <p> 
-                                        <span class="tweet_screen_name"><a href=""> Name{{ tweet.name }}</a></span> 
-                                        <span class="tweet_name">@tweet_name</span> ∙
-                                        <span class="tweet_date"> time {{ tweet.date}}</span>
-                                    </p>
-                                    <div class="tweet_text"> 'Russian Collusion' Was Always Just #FakeNews Aimed at Denigrating Trump/Blunting His Agenda....This Combined W/#DeepState Spying = SEDITION {{ tweet.body }}</div>
-                                    <p class="tweet_reactions"> <i class="fa fa-reply" aria-hidden="true"></i> 30 {{ tweet.reply }} 
-                                        <i class="fa fa-retweet" aria-hidden="true"></i> 30 {{ tweet.retweet }} 
-                                        <i class="fa fa-heart" aria-hidden="true"></i> 100 {{ tweet.like }}
-                                    </p>
-                                </div>
-                                {%  with 4 as trust %}
-                                {%  if trust == 4 %}
-                                    <i class="material-icons" style="color: #e2041a ">fiber_manual_record</i>
-                                {% elif trust == 3 %}
-                                    <i class="material-icons" style="color: #ff8a84 ">fiber_manual_record</i>
-                                {% elif trust == 2 %}
-                                    <i class="material-icons" style="color: #ffc957 ">fiber_manual_record</i>
-                                {% elif trust == 1 %}
-                                    <i class="material-icons" style="color: #92d36e ">fiber_manual_record</i>
-                                {% elif trust == 0 %}
-                                    <i class="material-icons" style="color: #72bb53 ">fiber_manual_record</i>
-                                {% endif %}
-                                {% endwith %}
-                            </div>
-                        </div>
-                        <p> &nbsp;</p>
-                    </div>
-                    
-                    <!-- Relevant articles -->
-                    <div class="tab" id="tabPanel2">
-                        <p> &nbsp;</p>
-                        <!-- Cards container -->
-                        <div class="band">
-                            <!-- grid item, containing a card -->
-                            <div class="item-1">
-                                <a href="http://www.bbc.co.uk/news" target="_blank" class="poster">
-                                    {% load static %}
-                                    <div class="thumb" style="background-image: url(http://www.bbc.co.uk/news/special/2015/newsspec_10857/bbc_news_logo.png);"></div>
-                                    <article>
-                                        <h2>BBC news outlet</h2>
-                                        <span>BBC news</span>
-                                    </article>
-                                </a>
-                            </div>
-                            <!-- grid item, containing a card -->
-                            <div class="item-2">
-                                <a href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045" class="poster">
-                                    <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png);"></div>
-                                    <article>
-                                        <h2>How to Conduct Remote Usability Testing</h2>
-                                        <span>Harry Brignull</span>
-                                    </article>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- ______________________ -->
-                        <p> &nbsp;</p>
-                    </div>
-                    <!-- Additional information -->
-                    <div class="tab" id="tabPanel3">
-                        <!-- Cards container -->
-                        <p> &nbsp;</p>
-                        <div class="band">
-                            <!-- grid item, containing a card -->
-                            <div id="myCard" class="item-1">
-                                <a href="#" class="poster">
-                                    {% load static %}
-                                    <div class="thumb" style="background: url('{% static '_img/placeholder.png' %}') no-repeat;"></div>
-                                    <article>
-                                        <p>Distribution of tweets about the news in time</p>                                    
-                                    </article>
-                                </a>
-                            </div>
-                            <!-- grid item, containing a card -->
-                            <div id="myCard" class="item-2">
-                                <a href="#" class="poster">
-                                    {% load static %}
-                                    <div class="thumb" style="background: url('{% static '_img/placeholder.png' %}') no-repeat;"></div>
-                                    <article>
-                                        <p>Radial diagram showing how much different factors affected the decision that the statement is 'fake'</p>
-                                    </article>
-                                </a>
-                            </div>
-                            <!-- grid item, containing a card -->
-                            <div id="myCard" class="item-3">
-                                <a href="" class="poster">
-                                    {% load static %}
-                                    <div class="thumb" style="background: url('{% static '_img/placeholder.png' %}') no-repeat;"></div>
-                                    <article>
-                                        <p>Map of statement spreading (if we have enough content on geolocation)</p>
-                                    </article>
-                                </a>
-                            </div>
-                        </div>
-                        <p> &nbsp;</p>
-                        <!-- ______________________ -->
-                    </div>
-                    <!-- Comments -->
-                    <div class="tab" id="tabPanel4">
-                        <!-- begin wwww.htmlcommentbox.com -->
-                        <div id="HCB_comment_box">
-                            <a href="http://www.htmlcommentbox.com">Widget</a> is loading comments...
-                        </div>
-                        <script type="text/javascript" id="hcb">
-                        /*<!--*/
-                        if (!window.hcb_user) {
-                            hcb_user = {};
-                        }(function() {
-                            var s = document.createElement("script"),
-                                l = hcb_user.PAGE || ("" + window.location).replace(/'/g, "%27"),
-                                h = "//www.htmlcommentbox.com";
-                            s.setAttribute("type", "text/javascript");
-                            s.setAttribute("src", h + "/jread?page=" + encodeURIComponent(l).replace("+", "%2B") + "&mod=%241%24wq1rdBcg%24fKggIQu.sMiyih691BVbc1" + "&opts=16862&num=10&ts=1490540267994");
-                            if (typeof s != "undefined") document.getElementsByTagName("head")[0].appendChild(s);
-                        })();
-                        </script>
-                        <!-- end www.htmlcommentbox.com -->
-                    </div>
-                </div>
-            </div>
-            <!-- The Modals -->
-            <div id="myModal" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="close">&times;</span>
-                        <h2>Modal Header</h2>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the Modal Body</p>
-                        <p>Some other text...</p>
-                    </div>
-                    <div class="modal-footer">
-                        <h3>Modal Footer</h3>
-                    </div>
-                </div>
-            </div>
-            <div id="myModal-2" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="close">&times;</span>
-                        <h2>Modal Header-2</h2>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the Modal Body</p>
-                        <p>Some other text...</p>
-                    </div>
-                    <div class="modal-footer">
-                        <h3>Modal Footer-2</h3>
-                    </div>
-                </div>
-            </div>
-            <div id="myModal-3" class="modal">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="close">&times;</span>
-                        <h2>Modal Header-3</h2>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the Modal Body</p>
-                        <p>Some other text...</p>
-                    </div>
-                    <div class="modal-footer">
-                        <h3>Modal Footer-3</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </article>
+        </div>
+    </div>
 </main>
-<footer role=“contentinfo”>
-    <p>Don't have our plugin yet?
-        <br> Download it <a href="index.htm">here</a>!</p>
-</footer>
+<div class="addContent">
+        <div class="tab">
+            <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Related Tweets')">Related Tweets</button>
+            <button class="tablinks" onclick="openTab(event, 'Relevant Articles')">Relevant Articles</button>
+            <button class="tablinks" onclick="openTab(event, 'Comments')">Comments</button>
+        </div>
+        <section>
+            <!-- Related Tweets -->
+            <div id="Related Tweets" class="tabcontent">                        
+                {% with "x"|rjust:"20" as range %}
+                    {% for _ in range %}
+                        <div class="tweet">
+                        {% load static %}
+                        <div class="tweet_image"> <img src='{% static '_img/tweet.jpg' %}'"> </div>
+                        <div class="tweet_right">
+                            <p> 
+                                <span class="tweet_screen_name"><a href=""> Name{{ tweet.name }}</a></span> 
+                                <span class="tweet_name">@tweet_name</span> ∙
+                                <span class="tweet_date"> time {{ tweet.date}}</span>
+                            </p>
+                            <div class="tweet_text"> Obama was a Complete Failure and The #FakeNews Media Covered for him, just like they do for All Democrats #WakeUpAmerica #MAGA {{ tweet.body }}</div>
+                            <p class="tweet_reactions"> <i class="fa fa-reply" aria-hidden="true"></i> 30 {{ tweet.reply }} 
+                                <i class="fa fa-retweet" aria-hidden="true"></i> 30 {{ tweet.retweet }} 
+                                <i class="fa fa-heart" aria-hidden="true"></i> 100 {{ tweet.like }}
+                            </p>
+                        </div>
+                        {%  with forloop.counter as trust %}
+                        {%  if trust == 4 %}
+                            <i class="material-icons" style="color: #e2041a ">fiber_manual_record</i>
+                        {% elif trust == 3 %}
+                            <i class="material-icons" style="color: #ff8a84 ">fiber_manual_record</i>
+                        {% elif trust == 2 %}
+                            <i class="material-icons" style="color: #ffc957 ">fiber_manual_record</i>
+                        {% elif trust == 1 %}
+                            <i class="material-icons" style="color: #92d36e ">fiber_manual_record</i>
+                        {% elif trust == 0 %}
+                            <i class="material-icons" style="color: #72bb53 ">fiber_manual_record</i>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                    {% endfor %}
+                {% endwith %}
+            </div> 
+            <!-- Relevant Articles -->
+            <div id="Relevant Articles" class="tabcontent">
+                <!-- Cards container -->
+                <div class="band">
+                    <!-- grid item, containing a card -->
+                    <div class="item-1">
+                        <a href="http://www.bbc.co.uk/news" target="_blank" class="poster">
+                            {% load static %}
+                            <div class="thumb" style="background-image: url(http://www.bbc.co.uk/news/special/2015/newsspec_10857/bbc_news_logo.png);"></div>
+                            <article>
+                                <h2>BBC news outlet</h2>
+                                <span>BBC news</span>
+                            </article>
+                        </a>
+                    </div>
+                    <!-- grid item, containing a card -->
+                    <div class="item-2">
+                        <a href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045" class="poster">
+                            <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png);"></div>
+                            <article>
+                                <h2>How to Conduct Remote Usability Testing</h2>
+                                <span>Harry Brignull</span>
+                            </article>
+                        </a>
+                    </div>
+                </div>
+                <!-- ______________________ -->
+            </div>
+            <!-- Comments -->
+            <div id="Comments" class="tabcontent">
+
+            <!-- begin wwww.htmlcommentbox.com -->
+            <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Widget</a> is loading comments...</div>
+            <link rel="stylesheet" type="text/css" href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+            <script type="text/javascript" id="hcb"> 
+            /*<!--*/ 
+            if (!window.hcb_user){
+                hcb_user={};
+            } (function(){
+                var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="//www.htmlcommentbox.com";
+                s.setAttribute("type","text/javascript");
+                s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1493395617865");
+                if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);
+            })();
+             /*-->*/ 
+            </script>
+            <!-- end www.htmlcommentbox.com -->
+            </div>
+        </section>
+</div>
 <script>
-    // Get the modal 
-    var modal = document.getElementById('myModal'); // Get the button that opens the modal 
-    var btn = document.getElementById('myCard'); // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    function openTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
 
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
         }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the link that opened the tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
     }
+    document.getElementById("defaultOpen").click();
+
     /* Updating */
     var trueV = document.getElementById('true');
     var fakeV = document.getElementById('fake');
@@ -362,30 +197,31 @@
     /* does not wotk if there is no voting yet */
     /*TO DO*/
     console.log(progress.max);
-    fakeV.onclick = function() {
+    trueV.onclick = function() {
         if (progress == null ){
 
         }
         else {
             progress.value += 1;
             progress.max   += 1;
-            document.getElementById('fakeVote').innerHTML  = progress.value.toString();
+            document.getElementById('fakeVote').innerHTML  = progress.max - progress.value;
             document.getElementById('totalVote').innerHTML = progress.max;
             voting.style.display = "none";
         }
     }
 
-    trueV.onclick = function() {
+    fakeV.onclick = function() {
         if (progress == null) {
             votingProgress.style.display = "initial";
         }
         else {
             progress.max += 1;
+            document.getElementById('fakeVote').innerHTML  = progress.max - progress.value;
             document.getElementById('totalVote').innerHTML = progress.max;
             voting.style.display = "none";
         }
     }
-
+/*
 $(document).on('click','.contact',function(e) {
     id = $(this).attr("id");
 
@@ -397,8 +233,7 @@ $(document).on('click','.contact',function(e) {
         },
     });
 });
-
+*/
 </script>
-<script type="text/javascript" src="{% static 'tabs.js' %}"></script>
 
 {% endblock content %}

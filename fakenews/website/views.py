@@ -10,19 +10,14 @@ def index(request):
 		'items': items,
 	})
 
-
-def statements(request):
-	items = Statement.objects
-	return render(request, 'website/relatedStat.html', {
-		'items': items,
-	})
-
 def statement(request, id):
 	try:
 		item = Statement.objects.get(id=id)
 	except Item.DoesNotExist:
 		raise Http404('This item does not exist')
+	decisions = ['is almost surely true','is probably true','cannot be certainly identified','is probably fake','is almost surely fake']
 	return render(request, 'website/statement.html', {
+		'decisions': decisions,
 		'item': item,
 	})
 

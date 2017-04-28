@@ -19,7 +19,6 @@ from website import views
 
 urlpatterns = [
 	url(r'^$', views.index, name = "index"),
-	url(r'^statements/', views.statements, name = "statements"),
     url(r'^statement/(?P<id>\d+)/', views.statement, name='statement'),
     url(r'^search/', views.search, name = "search"),
     url(r'^admin/', admin.site.urls),

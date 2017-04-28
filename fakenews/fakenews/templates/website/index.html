@@ -1,20 +1,24 @@
 {% extends "base.html" %} {% block content %}
+<div id="background"></div>
 <article class="home">
+    <div class="positioned">
     <section>
-        <h1><a href="{% url 'index' %}">Check fake news</a></h1>
-        <h2>Find out if the news is fake! </h2>
+        {% load static %}
+        <a href="{% url 'index' %}"><img src='{% static "_img/justweetleague.png" %}' ></a>
     </section>
     <section>
         <form action="{% url 'search' %}" class="searchWrapper" method="POST">
             {% csrf_token %} {{ form }}
-            <input type="text" placeholder="Statement / hashtag / theme">
-            <button type="submit"> Search </button>
+            <input type="text" placeholder="Type a statement you would like to verify...">
+            <!--<button type="submit"> Search </button>-->
         </form>
     </section>
-    <section>
-        <h3><strong>Warning</strong>: The information provided is not 100% correct </h3>
+    </div>
+    <section class="pluginInfo">
+        <!--<h3><strong>Warning</strong>: The information provided is not 100% correct </h3>-->
         <p>Don't have our plugin yet?
             <br> Download it <a href="{% url 'index' %}">here</a>!</p>
     </section>
 </article>
+
 {% endblock content %}
