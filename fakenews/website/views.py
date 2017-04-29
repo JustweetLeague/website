@@ -38,16 +38,26 @@ def search(request):
 		'items': items,
 	})
 
-'''
-def search(request):
-    if request.method == 'POST':
-        # do some processing
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            s_query = form.cleaned_data['search_query']
-            s_results = SomeTable.objects.filter(name=s_query)
-            return render(request, 'search.html', {'form': form, 's_results': s_results})
-    else:
-        form = SearchForm()
-    return render(request, 'website/search.html', {'form': form,})
-'''
+
+def update_fVotes(request):
+	try:
+		fVote = request.GET.get('fakeVote')
+    		sID = request.GET.get('statementID')
+    		statement = Statement.objects.get(id=sID)
+    		statement.usersvoteFake = fVote;
+    		statement.save()
+		return HttpResponse("Update successful!")
+	except:
+   		return HttpResponse("Oh... Update failed...")
+
+def update_tVotes(request):
+	try:
+		tVote = request.GET.get('trueVote')
+    		sID = request.GET.get('statementID')
+    		statement = Statement.objects.get(id=sID)
+    		statement.usersvoteTrue = tVote;
+    		statement.save()
+		return HttpResponse("Update successful!")
+	except:
+   		return HttpResponse("Oh... Update failed...")
+

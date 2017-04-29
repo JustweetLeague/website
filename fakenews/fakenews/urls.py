@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^statement/(?P<id>\d+)/', views.statement, name='statement'),
     url(r'^search/', views.search, name = "search"),
     url(r'^admin/', admin.site.urls),
+    url(r'^ajax/update_fVotes/$', views.update_fVotes, name='update_fVotes'),
+    url(r'^ajax/update_tVotes/$', views.update_tVotes, name='update_tVotes'),
 ]

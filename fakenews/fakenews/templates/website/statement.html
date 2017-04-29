@@ -49,25 +49,25 @@
                 {%endwith%}
             </section>
         </div>
-        <div class="opinion">
+        <div class="opinion" id="refresh-this-div">
         <section class="card">
-            {% if item.usersvote > 0 %}
-                    <progress id ="progress" value="{{item.usersvoteTrue}}" max="{{ item.usersvoteFake|add:item.usersvoteTrue }}"></progress>
-                    <p><span id="fakeVote" >{{ item.usersvoteFake }}</span> out of <span id="totalVote">{{ item.usersvoteFake|add:item.usersvoteTrue }}</span> people believe this news is fake</p>
+        {% with item.usersvoteFake|add:item.usersvoteTrue as tVote %}
+            {% if tVote > 0 %}
+                    <progress id ="progress" value="{{item.usersvoteTrue}}" max="{{tVote}}"></progress>
+                    <p><span id="fakeVote" >{{ item.usersvoteFake }}</span> out of <span id="totalVote">{{ tVote }}</span> people believe this news is fake</p>
             {% else %}
-                <p> No users have yet voted. </p>
-            {% endif %}
-            <!--
-                <div id = "votingProgress" >
-                    <p><span id="fakeVote" >0</span> out of <span id="totalVote">0</span> people believe this news is fake</p>
-                    <progress id ="progress" value=0 max=0></progress>
+                <p id = "noVotesP"> No users have yet voted. </p>
+                <div id="votingCounted" style="display: none">
+                    <progress id ="progressHidden" value="0" max="1"></progress>
+                    <p><span id="fakeVote" ></span> out of <span id="totalVote"></span> people believe this news is fake</p>
                 </div>
-            -->    
+            {% endif %}  
                 <div class="voting">
                     <p> Vote: </p>
                     <button id="true">TRUE</button>
                     <button id="fake">FAKE</button>
                 </div>
+        {% endwith %}        
         </section>
         </div>
     </div>
@@ -81,7 +81,7 @@
         <section>
             <!-- Related Tweets -->
             <div id="Related Tweets" class="tabcontent">                        
-                {% with "x"|rjust:"20" as range %}
+                {% with "x"|rjust:"5" as range %}
                     {% for _ in range %}
                         <div class="tweet">
                         {% load static %}
@@ -98,17 +98,17 @@
                                 <i class="fa fa-heart" aria-hidden="true"></i> 100 {{ tweet.like }}
                             </p>
                         </div>
-                        {%  with forloop.counter as trust %}
+                        {%  with forloop.counter|add:"-1" as trust %}
                         {%  if trust == 4 %}
-                            <i class="material-icons" style="color: #e2041a ">fiber_manual_record</i>
+                            <i class="material-icons" style="color: #e73925 ">fiber_manual_record</i>
                         {% elif trust == 3 %}
-                            <i class="material-icons" style="color: #ff8a84 ">fiber_manual_record</i>
+                            <i class="material-icons" style="color: #f29b2a ">fiber_manual_record</i>
                         {% elif trust == 2 %}
-                            <i class="material-icons" style="color: #ffc957 ">fiber_manual_record</i>
+                            <i class="material-icons" style="color: #fff829 ">fiber_manual_record</i>
                         {% elif trust == 1 %}
-                            <i class="material-icons" style="color: #92d36e ">fiber_manual_record</i>
+                            <i class="material-icons" style="color: #7cf415 ">fiber_manual_record</i>
                         {% elif trust == 0 %}
-                            <i class="material-icons" style="color: #72bb53 ">fiber_manual_record</i>
+                            <i class="material-icons" style="color: #00ffd8 ">fiber_manual_record</i>
                         {% endif %}
                         {% endwith %}
                     </div>
@@ -192,48 +192,76 @@
     var trueV = document.getElementById('true');
     var fakeV = document.getElementById('fake');
     var progress = document.getElementById('progress');
+    var progressHidden = document.getElementById('progressHidden');
     var voting = document.getElementsByClassName("voting")[0];
     var votingProgress = document.getElementById('votingProgress');
+    var votingCounted = document.getElementById('votingCounted');
+    var noVotesP= document.getElementById('noVotesP');
     /* does not wotk if there is no voting yet */
     /*TO DO*/
-    console.log(progress.max);
     trueV.onclick = function() {
+        var trueVote = 0;
         if (progress == null ){
-
+            trueVote = 1;
+            voting.style.display = "none";
+            noVotesP.style.display = "none";
+            votingCounted.style.display ="block";
+            progressHidden.value += 1;
+            document.getElementById('fakeVote').innerHTML  = 0;
+            document.getElementById('totalVote').innerHTML = 1;
         }
         else {
             progress.value += 1;
             progress.max   += 1;
+            trueVote = progress.value;
             document.getElementById('fakeVote').innerHTML  = progress.max - progress.value;
             document.getElementById('totalVote').innerHTML = progress.max;
             voting.style.display = "none";
         }
+        $.ajax({
+                url: '{% url "update_tVotes" %}',
+                type: "GET",
+                dataType: 'json',
+                data: {
+                    'trueVote' : trueVote,
+                    'statementID': {{ item.id }}
+                },
+                error: function(data) {
+                    // grab the inner html of the returned div 
+                    // so you don't nest a new div#refresh-this-div on every call
+                    var html = $(data).filter('#refresh-this-div').html();
+                    console.log(html);
+                    $('#refresh-this-div').html(html);
+                }
+        });
     }
-
     fakeV.onclick = function() {
+        var fakeCount = 0;
         if (progress == null) {
-            votingProgress.style.display = "initial";
+            fakeCount = 1;
+            voting.style.display = "none";
+            noVotesP.style.display = "none";
+            votingCounted.style.display ="block";
+            document.getElementById('fakeVote').innerHTML  = 1;
+            document.getElementById('totalVote').innerHTML = 1;
         }
         else {
             progress.max += 1;
-            document.getElementById('fakeVote').innerHTML  = progress.max - progress.value;
+            fakeCount = progress.max - progress.value;
+            document.getElementById('fakeVote').innerHTML  = fakeCount;
             document.getElementById('totalVote').innerHTML = progress.max;
             voting.style.display = "none";
         }
+        $.ajax({
+                url: '{% url "update_fVotes" %}',
+                type: "GET",
+                dataType: 'json',
+                data: {
+                    'fakeVote' : fakeCount,
+                    'statementID': {{ item.id }}
+                }
+        });
     }
-/*
-$(document).on('click','.contact',function(e) {
-    id = $(this).attr("id");
-
-    $.ajax({
-        type: "GET",
-        url: '/path/' + id,
-        success: function (result) {
-            $('.details').html(result);
-        },
-    });
-});
-*/
 </script>
 
 {% endblock content %}

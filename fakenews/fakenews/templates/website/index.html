@@ -2,7 +2,7 @@
 <div id="background"></div>
 <article class="home">
     <div class="positioned">
-    <section>
+    <section class="logo">
         {% load static %}
         <a href="{% url 'index' %}"><img src='{% static "_img/justweetleague.png" %}' ></a>
     </section>
@@ -18,6 +18,13 @@
         <!--<h3><strong>Warning</strong>: The information provided is not 100% correct </h3>-->
         <p>Don't have our plugin yet?
             <br> Download it <a href="{% url 'index' %}">here</a>!</p>
+    </section>
+    <section class="info">
+        <img src='{% static "_img/info.png" %}'>
+        <div class="tooltip">
+            <p class="tooltiptext">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+        </div>
     </section>
 </article>
 
