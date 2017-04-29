@@ -4,9 +4,9 @@
         {% with "_img/justweetleague"|addstr:item.fakeness|addstr:".png" as imagePath %}
         <a href="{% url 'index' %}"><img src={% static imagePath %}></a>
         {%endwith%}
-    <form action="{% url 'search' %}" class="searchWrapper" method="POST">
+    <form method="GET" action="{% url 'search' %}" class="searchWrapper">
         {% csrf_token %} {{ form }}
-        <input type="text" placeholder="Type a statement you would like to verify...">
+        <input name="q" type="text" placeholder="Type a statement you would like to verify...">
     </form>
 </header>
 <main class = "statementMain" role=“main”>

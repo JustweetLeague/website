@@ -4,14 +4,14 @@
         <a href="{% url 'index' %}"><img src='{% static "_img/justweetleagueAlignBG.png" %}'></a>
     </section>
     <section>
-        <form action="{% url 'search' %}" class="searchWrapper" method="POST">
+        <form action="{% url 'search' %}" class="searchWrapper" method="GET">
             {% csrf_token %} {{ form }}
-            <input type="text" placeholder="Type a statement you would like to verify...">
+            <input type="text" name="q" placeholder="Type a statement you would like to verify...">
         </form>
     </section>
 </header>
 <main class = 'centered sresultsMain' role=“main”>
-        <h2>"Statement"</h2>   
+        <h2>Found {{items.count}} results for <b>"{{ message }}"</b></h2>
         <section>
             <ul>
                 {% for stat in items %}
@@ -21,7 +21,7 @@
                 {% endfor %}
             </ul>
         </section>
-        <h3>{{items.count}} related statements found</h3>
+        <h3>{{items.count}} related statements</h3>
 </main>
 <footer class= "bottomed sresultsFooter">
     <section class="pluginInfo">

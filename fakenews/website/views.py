@@ -28,9 +28,9 @@ def search(request):
 	items = Statement.objects.exclude(id=1)
 	if 'q' in request.GET:
 		if request.GET['q'] == '':
-		  message = 'No searching keyword entered'
+		  message = ''
 		else:
-		  message = 'You searched for: %s' % request.GET['q']
+		  message = request.GET['q']
 	else:
 	  message = 'Form is not submitted properly.'
 	return render(request, 'website/search.html', {

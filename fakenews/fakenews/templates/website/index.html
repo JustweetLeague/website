@@ -7,9 +7,9 @@
         <a href="{% url 'index' %}"><img src='{% static "_img/justweetleague.png" %}' ></a>
     </section>
     <section>
-        <form action="{% url 'search' %}" class="searchWrapper" method="POST">
+        <form action="{% url 'search' %}" class="searchWrapper" method="GET">
             {% csrf_token %} {{ form }}
-            <input type="text" placeholder="Type a statement you would like to verify...">
+            <input name="q" type="text" placeholder="Type a statement you would like to verify...">
             <!--<button type="submit"> Search </button>-->
         </form>
     </section>
