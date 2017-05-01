@@ -125,15 +125,16 @@ a:hover {
 }
 .home .info .tooltiptext {
     visibility: hidden;
-    width: 260px;
+    width: 800px;
     background-color: #307F97;
     z-index: 1;
-    color: #fff;
+    color: white;
     border: none;
     
     position: fixed;
-    top: 55px;
-    right: 0;
+    top: 0;
+    right: 240px;
+    padding: 100px;
     /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
     opacity: 0;
     transition: opacity 2s;
