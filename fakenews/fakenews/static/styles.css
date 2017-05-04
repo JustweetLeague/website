@@ -78,7 +78,7 @@ a {
 }
 
 a:hover {
-    color: darkmagenta;
+    color: darkblue;
 }
 
 .center {
@@ -252,6 +252,7 @@ a:hover {
     display: flex;
     width: 100%;
     box-shadow: 0px 34px 122px -4px rgba(0,0,0,0.41);
+    z-index: 3;
 }
 .statementHeader img{
     margin-top: 20px;
@@ -536,7 +537,6 @@ a:hover {
     background-color: lightblue;
 }
 
-
 /* Tweet card */
 .tweet {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -551,35 +551,33 @@ a:hover {
     border-bottom: 1px ridge lightgray;    
     border-width: 1px;
 }
-.tweet p {
-   text-align: left;
-   margin: 8px 0 0 5px;
-}
+
 .tweet_image {
     width: 48px;
     height: 48px;
-    padding: 8px 0 0 5px;
-}
-.tweet_image img {
-    width: 48px;
-    height: 48px;
-    margin: 8px 0 0 5px;
+    padding: 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 .tweet_right {
-    margin-left: 20px;
+    margin-left: 5px;
     display:flex;
+    width: 700px;
     flex-flow: column;
-
     padding-right: 5px;
 }
-
+.tweet_right p {
+   text-align: left;
+   margin: 8px 0 0 5px;
+}
 .tweet_screen_name a {
     font-weight: bold;
     text-align:left;
     color:black;
     text-decoration: none;
+}
+.tweet_screen_name a:hover {
+    text-decoration: underline;
 }
 .tweet_name {
     font-weight: bold;
@@ -597,9 +595,11 @@ a:hover {
 .tweet_text a {
     text-decoration: none;
 }
+
 .tweet_text a:hover {
     text-decoration: underline;
 }
+
 .tweet_reactions{
     text-align: justify; 
     color: rgb(170, 184, 194);
@@ -615,6 +615,7 @@ a:hover {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
     grid-gap: 20px;
+    z-index: 2;
 }
 
 @media only screen and (min-width: 500px) {
@@ -689,6 +690,7 @@ a:hover {
 }
 
 /* Comment box styles */
+
 #HCB_comment_box h3 {
     display: none;
 }

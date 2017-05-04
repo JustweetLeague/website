@@ -9,7 +9,7 @@
     <section>
         <form action="{% url 'search' %}" class="searchWrapper" method="GET">
             {% csrf_token %} {{ form }}
-            <input name="q" type="text" placeholder="Type a statement you would like to verify...">
+            <input name="q" type="text" placeholder="Type a one word theme to get related statements">
             <!--<button type="submit"> Search </button>-->
         </form>
     </section>
@@ -30,7 +30,7 @@
             We try our best to give you a prediction of whether a given statement or piece of news is trustworthy or not based on the tweets related to the statement. We look at the tweets relevant to the statement, how many tweets are against the statements and how many are agreeing with it. Also, we include related news from other news outlets as a factor. Based such a voting procedure we give our opinion on the trustworthiness of a statement.
             <br>
             <b>PLUGIN</b><br>
-            We have also developed a plugin where we give our calculated opinion on the trustworthiness of a tweet. We rate the tweet you give us on a scale from 0 to 4, 0 being the least trustworthy and 4 being the most trustworthy. The points are allocated with consideration of the following factors: lack of support (user is likely to be a bot, the statement is not mentioned elsewhere and the user has few followers himself), lack of seriousness (checking the spelling of the tweet), actual opposition (a lot of tweets contradicting the original tweet, possibly with negative sentiment), worrisome viral effect (the tweet has spread far and fast, people start believing it because of its popularity, or massively reacting to it with negative sentiment).
+            We have also developed a plugin where we give our calculated opinion on the trustworthiness of a tweet. We rate the tweet you give us on a scale from 1 to 5, 1 being the least trustworthy and 5 being the most trustworthy. The points are allocated with consideration of the following factors: lack of support (user is likely to be a bot, the statement is not mentioned elsewhere and the user has few followers himself), lack of seriousness (checking the spelling of the tweet), actual opposition (a lot of tweets contradicting the original tweet, possibly with negative sentiment), worrisome viral effect (the tweet has spread far and fast, people start believing it because of its popularity, or massively reacting to it with negative sentiment).
             </p>
         </div>
     </section>

@@ -6,7 +6,8 @@
     <section>
         <form action="{% url 'search' %}" class="searchWrapper" method="GET">
             {% csrf_token %} {{ form }}
-            <input type="text" name="q" placeholder="Type a statement you would like to verify...">
+            <input type="text" name="q" placeholder="Type a one word theme to get related statements">
+            <!--Type a statement you would like to verify...-->
         </form>
     </section>
 </header>

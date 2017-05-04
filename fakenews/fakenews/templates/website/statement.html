@@ -6,7 +6,7 @@
         {%endwith%}
     <form method="GET" action="{% url 'search' %}" class="searchWrapper">
         {% csrf_token %} {{ form }}
-        <input name="q" type="text" placeholder="Type a statement you would like to verify...">
+        <input name="q" type="text" placeholder="Type a theme to get related statements">
     </form>
 </header>
 <main class = "statementMain" role=“main”>
@@ -80,68 +80,61 @@
         </div>
         <section>
             <!-- Related Tweets -->
-            <div id="Related Tweets" class="tabcontent">                        
-                {% with "x"|rjust:"5" as range %}
-                    {% for _ in range %}
-                        <div class="tweet">
-                        {% load static %}
-                        <div class="tweet_image"> <img src='{% static '_img/tweet.jpg' %}'"> </div>
+            
+            <div id="Related Tweets" class="tabcontent"> 
+               
+                {% for tweet in tweets %} 
+                    <div class="tweet">
+                        <img class="tweet_image" src='{{tweet.user.profile_image_url_https }}'"> 
                         <div class="tweet_right">
                             <p> 
-                                <span class="tweet_screen_name"><a href=""> Name{{ tweet.name }}</a></span> 
-                                <span class="tweet_name">@tweet_name</span> ∙
-                                <span class="tweet_date"> time {{ tweet.date}}</span>
+                                <span class="tweet_screen_name"><a href="https://twitter.com/anyuser/status/{{tweet.id_str}}"> {{ tweet.user.screen_name }}</a></span> 
+                                <span class="tweet_name">{{tweet.user.name}}</span> ∙
+                                <span class="tweet_date"> {{ tweet.created_at}}</span>
                             </p>
-                            <div class="tweet_text"> Obama was a Complete Failure and The #FakeNews Media Covered for him, just like they do for All Democrats #WakeUpAmerica #MAGA {{ tweet.body }}</div>
-                            <p class="tweet_reactions"> <i class="fa fa-reply" aria-hidden="true"></i> 30 {{ tweet.reply }} 
-                                <i class="fa fa-retweet" aria-hidden="true"></i> 30 {{ tweet.retweet }} 
-                                <i class="fa fa-heart" aria-hidden="true"></i> 100 {{ tweet.like }}
+                            <div class="tweet_text"> {{ tweet.text }}</div>
+                            <p class="tweet_reactions">
+                                <i class="fa fa-retweet" aria-hidden="true"></i> {{ tweet.retweet_count }} 
+                                <i class="fa fa-heart" aria-hidden="true"></i> {{ tweet.favorite_count }}
                             </p>
                         </div>
-                        {%  with forloop.counter|add:"-1" as trust %}
-                        {%  if trust == 4 %}
-                            <i class="material-icons" style="color: #e73925 ">fiber_manual_record</i>
-                        {% elif trust == 3 %}
-                            <i class="material-icons" style="color: #f29b2a ">fiber_manual_record</i>
-                        {% elif trust == 2 %}
-                            <i class="material-icons" style="color: #fff829 ">fiber_manual_record</i>
-                        {% elif trust == 1 %}
-                            <i class="material-icons" style="color: #7cf415 ">fiber_manual_record</i>
-                        {% elif trust == 0 %}
-                            <i class="material-icons" style="color: #00ffd8 ">fiber_manual_record</i>
+                        {% if tweet.score > 0 %}
+                            {{tweet.score}}
+                            {%  if tweet.score == 1 %}
+                                <i class="material-icons" style="color: #e73925; ">fiber_manual_record</i>
+                            {% elif tweet.score == 2 %}
+                                <i class="material-icons" style="color: #f29b2a ">fiber_manual_record</i>
+                            {% elif tweet.score == 3 %}
+                                <i class="material-icons" style="color: #fff829 ">fiber_manual_record</i>
+                            {% elif tweet.score == 4 %}
+                                <i class="material-icons" style="color: #7cf415 ">fiber_manual_record</i>
+                            {% elif tweet.score == 5 %}
+                                <i class="material-icons" style="color: #00ffd8 ">fiber_manual_record</i>
+                            {% endif %}
                         {% endif %}
-                        {% endwith %}
                     </div>
-                    {% endfor %}
-                {% endwith %}
+                {% endfor %}
+               
             </div> 
             <!-- Relevant Articles -->
             <div id="Relevant Articles" class="tabcontent">
                 <!-- Cards container -->
                 <div class="band">
                     <!-- grid item, containing a card -->
-                    <div class="item-1">
-                        <a href="http://www.bbc.co.uk/news" target="_blank" class="poster">
-                            {% load static %}
-                            <div class="thumb" style="background-image: url(http://www.bbc.co.uk/news/special/2015/newsspec_10857/bbc_news_logo.png);"></div>
+                    {% for article in articles %}
+                        <div class="item">
+                        <a href='{{article.link}}' target="_blank" class="poster">
+                            <div class="thumb" style="background-image: url('{{article.image}}');"></div>
                             <article>
-                                <h2>BBC news outlet</h2>
-                                <span>BBC news</span>
+                                <h2>{{article.title}}</h2>
+                                <span>{{article.source}}</span>
                             </article>
                         </a>
                     </div>
-                    <!-- grid item, containing a card -->
-                    <div class="item-2">
-                        <a href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045" class="poster">
-                            <div class="thumb" style="background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png);"></div>
-                            <article>
-                                <h2>How to Conduct Remote Usability Testing</h2>
-                                <span>Harry Brignull</span>
-                            </article>
-                        </a>
-                    </div>
+                    {% empty %}
+                    <p style="width: 300px;">No relevant news has been found.</p>
+                    {% endfor %}
                 </div>
-                <!-- ______________________ -->
             </div>
             <!-- Comments -->
             <div id="Comments" class="tabcontent">
