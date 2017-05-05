@@ -542,7 +542,7 @@ a:hover {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 14px;
     margin: 10px 0 10px 100px;
-    max-width: 800px;
+    width: 800px;
     min-height: 65px;
     display:flex;
     flex-flow: row;
@@ -551,7 +551,9 @@ a:hover {
     border-bottom: 1px ridge lightgray;    
     border-width: 1px;
 }
-
+.tweet i{
+        cursor: pointer;
+}
 .tweet_image {
     width: 48px;
     height: 48px;
@@ -604,6 +606,52 @@ a:hover {
     text-align: justify; 
     color: rgb(170, 184, 194);
 } 
+
+/* Popup container - can be anything you want */
+.explanationPopup {
+    position: relative;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* The actual popup */
+.popuptext {
+    visibility: hidden;
+    background-color: #307F97;
+    color: white;
+    font-size: 16px;
+    width: 200px;
+    margin: 9px 5px;
+    padding-right:5px;    
+    text-align: left;
+    position: relative;
+    z-index: 1;
+}
+.popuptext li{
+    list-style-type: circle;
+}
+
+
+/* Toggle this class - hide and show the popup */
+.explanationPopup .show {
+    visibility: visible;
+    -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+    from {opacity: 0;} 
+    to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity:1 ;}
+}
 
 /* Grids */
 

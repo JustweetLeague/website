@@ -9,6 +9,9 @@ from jsonmerge import merge
 
 from website.models import Statement 
 from website.models import Article
+from website.models import User
+from website.models import Tweet
+
 from website.getTweets import getTweets
 from website.analyseTweets import analyse
 
@@ -35,27 +38,53 @@ def search(request):
 
 def statement(request, id):
 	try:
-		item = Statement.objects.get(id=id)
+		statement = Statement.objects.get(id=id)
 	except Item.DoesNotExist:
-		raise Http404('This item does not exist')
+		raise Http404('This statement does not exist')
 
 	try:
-		articles = Article.objects.filter(statement=item)
+		articles = Article.objects.filter(statement=statement)
 	except ObjectDoesNotExist:
 		raise Http404('This articles does not exist')
 	decisions = ['is almost surely true','is probably true','cannot be certainly identified','is probably fake','is almost surely fake']
-	tweets = getTweets(item.title)
-	tweetWithScore = [0] * len(tweets)
-	for i in range(len(tweets)):
-		analysis = analyse(tweets[i])
-		tweetWithScore[i] = merge(tweets[i], analysis)
+	
+	try:
+		tweets = getTweets(statement.title)
+		tweetWithScore = [0] * len(tweets)
+		for i in range(len(tweets)):
+			analysis = analyse(tweets[i])
+			tweetWithScore[i] = merge(tweets[i], analysis)
+			update_tweets(tweetWithScore[i],statement)
+	except:
+		tweetWithScore = Tweet.objects.filter(statements=statement)
 	return render(request, 'website/statement.html', {
 		'decisions': decisions,
-		'item': item,
+		'item': statement,
 		'tweets':tweetWithScore,
 		#'tweets':tweets,
 		'articles':articles,
 	})
+
+
+def update_tweets(tweet,statement):
+	#add user to a database
+	user, createdUser = User.objects.get_or_create(name=tweet['user']['name'])
+	if createdUser:
+		user.name = tweet['user']['name']
+		user.screen_name = tweet['user']['screen_name']
+		user.profile_image_url_https = tweet['user']['profile_image_url_https']
+		user.save()	
+	#add tweet to a database
+	tweetDB, created = Tweet.objects.get_or_create(user=user,id_str=tweet['id_str'])
+	tweetDB.id_str = tweet['id_str']
+	tweetDB.text = tweet['text']
+	tweetDB.retweet_count = tweet['retweet_count']
+	tweetDB.favorite_count = tweet['favorite_count']
+	tweetDB.created_at = tweet['created_at']
+	tweetDB.score = tweet['score']
+	tweetDB.setProblems(tweet['problems'])
+	tweetDB.statements.add(statement)
+	tweetDB.save()
 
 def update_fVotes(request):
 	try:

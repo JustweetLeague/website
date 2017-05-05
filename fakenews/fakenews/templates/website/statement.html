@@ -18,14 +18,6 @@
         </section>
     </div>
     <div class="mainContent">
-        <!-- If comming from plugin output tweet it cam from on the top -->
-        <div>
-            {% if item.fakeness == -1 %}
-            <section class="card tweet"> 
-                <p>Text of tweet - by whom</p>
-            </section>
-            {% endif %}
-        </div>
         <!-- Our decision if the statement is fake or true -->
         <div class="decision">
             <section class="card">
@@ -83,12 +75,13 @@
             
             <div id="Related Tweets" class="tabcontent"> 
                
-                {% for tweet in tweets %} 
+                {% for tweet in tweets %}
+                <div style="display:flex; flex-flow: row;"> 
                     <div class="tweet">
                         <img class="tweet_image" src='{{tweet.user.profile_image_url_https }}'"> 
                         <div class="tweet_right">
                             <p> 
-                                <span class="tweet_screen_name"><a href="https://twitter.com/anyuser/status/{{tweet.id_str}}"> {{ tweet.user.screen_name }}</a></span> 
+                                <span class="tweet_screen_name"><a href="https://twitter.com/anyuser/status/{{tweet.id_str}}" target="_blank"> {{ tweet.user.screen_name }}</a></span> 
                                 <span class="tweet_name">{{tweet.user.name}}</span> ∙
                                 <span class="tweet_date"> {{ tweet.created_at}}</span>
                             </p>
@@ -101,18 +94,36 @@
                         {% if tweet.score > 0 %}
                             {{tweet.score}}
                             {%  if tweet.score == 1 %}
-                                <i class="material-icons" style="color: #e73925; ">fiber_manual_record</i>
+                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #e73925; ">fiber_manual_record</i>
                             {% elif tweet.score == 2 %}
-                                <i class="material-icons" style="color: #f29b2a ">fiber_manual_record</i>
+                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #f29b2a ">fiber_manual_record</i>
                             {% elif tweet.score == 3 %}
-                                <i class="material-icons" style="color: #fff829 ">fiber_manual_record</i>
+                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #fff829 ">fiber_manual_record</i>
                             {% elif tweet.score == 4 %}
-                                <i class="material-icons" style="color: #7cf415 ">fiber_manual_record</i>
+                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #7cf415 ">fiber_manual_record</i>
                             {% elif tweet.score == 5 %}
-                                <i class="material-icons" style="color: #00ffd8 ">fiber_manual_record</i>
+                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #16c327 ">fiber_manual_record</i>         
                             {% endif %}
-                        {% endif %}
+                        {%else%}
+                            <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: white ">fiber_manual_record</i>
+                        {%endif%}
                     </div>
+                  <div class="explanationPopup">
+                        <div class="popuptext">
+                            {%  if tweet.score > 0 %}
+                            <ul> 
+                            {%for problem in tweet.problems%}
+                                <li>{{problem}}</li>
+                                {% empty %}
+                                <li>This tweet passes all tests</li>
+                            {%endfor%}
+                            </ul>
+                            {% else %}
+                                <p style="color: white">there was an error rating this tweet</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
                 {% endfor %}
                
             </div> 
@@ -254,6 +265,11 @@
                     'statementID': {{ item.id }}
                 }
         });
+    }
+
+    function openPopup(i) {
+        var popup = document.getElementsByClassName("popuptext")[i];
+        popup.classList.toggle("show");
     }
 </script>
 

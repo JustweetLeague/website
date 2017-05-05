@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %} {% load static %}
 <header class= "sresultsHeader" role=“banner”>
     <section>
-        <a href="{% url 'index' %}"><img src='{% static "_img/justweetleagueAlignBG.png" %}'></a>
+        <a href="{% url 'index' %}"><img src='{% static "_img/justweetleagueAlignBG.png" %}' style="z-index: 1;"></a>
     </section>
     <section>
         <form action="{% url 'search' %}" class="searchWrapper" method="GET">
