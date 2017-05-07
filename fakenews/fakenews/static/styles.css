@@ -167,6 +167,8 @@ a:hover {
     background-color: #307F97;
     display: flex; 
     justify-content: space-between;
+    position:relative;
+    z-index: 3;
 }
 .sresultsHeader img{
     height: 170px;
@@ -199,6 +201,8 @@ a:hover {
     padding: 10px 30px;
     border-radius: 5px;
     color: #307F97;
+    position:absolute;
+    z-index: 2;
 }
 .sresultsMain h3{
     font-style: italic;
