@@ -119,6 +119,7 @@ a:hover {
     position: fixed;
     top: 20px;
     right: 20px;
+    z-index: 2;
 }
 .home .info img{
     height: 30px;
