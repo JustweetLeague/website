@@ -65,109 +65,106 @@
     </div>
 </main>
 <div class="addContent">
-        <div class="tab">
-            <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Related Tweets')">Related Tweets</button>
-            <button class="tablinks" onclick="openTab(event, 'Relevant Articles')">Relevant Articles</button>
-            <button class="tablinks" onclick="openTab(event, 'Comments')">Comments</button>
-        </div>
-        <section>
-            <!-- Related Tweets -->
-            
-            <div id="Related Tweets" class="tabcontent"> 
-               
-                {% for tweet in tweets %}
-                <div style="display:flex; flex-flow: row;"> 
-                    <div class="tweet">
-                        <img class="tweet_image" src='{{tweet.user.profile_image_url_https }}'"> 
-                        <div class="tweet_right">
-                            <p> 
-                                <span class="tweet_screen_name"><a href="https://twitter.com/anyuser/status/{{tweet.id_str}}" target="_blank"> {{ tweet.user.screen_name }}</a></span> 
-                                <span class="tweet_name">{{tweet.user.name}}</span> ∙
-                                <span class="tweet_date"> {{ tweet.created_at}}</span>
-                            </p>
-                            <div class="tweet_text"> {{ tweet.text }}</div>
-                            <p class="tweet_reactions">
-                                <i class="fa fa-retweet" aria-hidden="true"></i> {{ tweet.retweet_count }} 
-                                <i class="fa fa-heart" aria-hidden="true"></i> {{ tweet.favorite_count }}
-                            </p>
-                        </div>
-                        {% if tweet.score > 0 %}
-                            {{tweet.score}}
-                            {%  if tweet.score == 1 %}
-                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #e73925; ">fiber_manual_record</i>
-                            {% elif tweet.score == 2 %}
-                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #f29b2a ">fiber_manual_record</i>
-                            {% elif tweet.score == 3 %}
-                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #fff829 ">fiber_manual_record</i>
-                            {% elif tweet.score == 4 %}
-                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #7cf415 ">fiber_manual_record</i>
-                            {% elif tweet.score == 5 %}
-                                <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #16c327 ">fiber_manual_record</i>         
-                            {% endif %}
-                        {%else%}
-                            <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: white ">fiber_manual_record</i>
-                        {%endif%}
+    <div class="tab">
+        <button id="defaultOpen" class="tablinks" onclick="openTab(event, 'Related Tweets')">Related Tweets</button>
+        <button class="tablinks" onclick="openTab(event, 'Relevant Articles')">Relevant Articles</button>
+        <button class="tablinks" onclick="openTab(event, 'Comments')">Comments</button>
+    </div>
+    <section>
+        <!-- Related Tweets -->
+        
+        <div id="Related Tweets" class="tabcontent"> 
+           
+            {% for tweet in tweets %}
+            <div style="display:flex; flex-flow: row;"> 
+                <div class="tweet">
+                    <img class="tweet_image" src='{{tweet.user.profile_image_url_https }}'"> 
+                    <div class="tweet_right">
+                        <p> 
+                            <span class="tweet_screen_name"><a href="https://twitter.com/anyuser/status/{{tweet.id_str}}" target="_blank"> {{ tweet.user.screen_name }}</a></span> 
+                            <span class="tweet_name">{{tweet.user.name}}</span> ∙
+                            <span class="tweet_date"> {{ tweet.created_at}}</span>
+                        </p>
+                        <div class="tweet_text"> {{ tweet.text }}</div>
+                        <p class="tweet_reactions">
+                            <i class="fa fa-retweet" aria-hidden="true"></i> {{ tweet.retweet_count }} 
+                            <i class="fa fa-heart" aria-hidden="true"></i> {{ tweet.favorite_count }}
+                        </p>
                     </div>
-                  <div class="explanationPopup">
-                        <div class="popuptext">
-                            {%  if tweet.score > 0 %}
-                            <ul> 
-                            {%for problem in tweet.problems%}
-                                <li>{{problem}}</li>
-                                {% empty %}
-                                <li>This tweet passes all tests</li>
-                            {%endfor%}
-                            </ul>
-                            {% else %}
-                                <p style="color: white">there was an error rating this tweet</p>
-                            {% endif %}
-                        </div>
-                    </div>
+                    {% if tweet.score > 0 %}
+                        {{tweet.score}}
+                        {%  if tweet.score == 1 %}
+                            <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #e73925; ">fiber_manual_record</i>
+                        {% elif tweet.score == 2 %}
+                            <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #f29b2a ">fiber_manual_record</i>
+                        {% elif tweet.score == 3 %}
+                            <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #fff829 ">fiber_manual_record</i>
+                        {% elif tweet.score == 4 %}
+                            <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #7cf415 ">fiber_manual_record</i>
+                        {% elif tweet.score == 5 %}
+                            <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: #16c327 ">fiber_manual_record</i>         
+                        {% endif %}
+                    {%else%}
+                        <i class="material-icons" onclick="openPopup({{forloop.counter0}})" style="color: white ">fiber_manual_record</i>
+                    {%endif%}
                 </div>
-                {% endfor %}
-               
-            </div> 
-            <!-- Relevant Articles -->
-            <div id="Relevant Articles" class="tabcontent">
-                <!-- Cards container -->
-                <div class="band">
-                    <!-- grid item, containing a card -->
-                    {% for article in articles %}
-                        <div class="item">
-                        <a href='{{article.link}}' target="_blank" class="poster">
-                            <div class="thumb" style="background-image: url('{{article.image}}');"></div>
-                            <article>
-                                <h2>{{article.title}}</h2>
-                                <span>{{article.source}}</span>
-                            </article>
-                        </a>
+              <div class="explanationPopup">
+                    <div class="popuptext">
+                        {%  if tweet.score > 0 %}
+                        <ul> 
+                        {%for problem in tweet.problems%}
+                            <li>{{problem}}</li>
+                            {% empty %}
+                            <li>This tweet passes all tests</li>
+                        {%endfor%}
+                        </ul>
+                        {% else %}
+                            <p style="color: white">there was an error rating this tweet</p>
+                        {% endif %}
                     </div>
-                    {% empty %}
-                    <p style="width: 300px;">No relevant news has been found.</p>
-                    {% endfor %}
                 </div>
             </div>
-            <!-- Comments -->
-            <div id="Comments" class="tabcontent">
-
-            <!-- begin wwww.htmlcommentbox.com -->
-            <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Widget</a> is loading comments...</div>
-            <link rel="stylesheet" type="text/css" href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
-            <script type="text/javascript" id="hcb"> 
+            {% endfor %}
+           
+        </div> 
+        <!-- Relevant Articles -->
+        <div id="Relevant Articles" class="tabcontent">
+            <!-- Cards container -->
+            <div class="band">
+                <!-- grid item, containing a card -->
+                {% for article in articles %}
+                    <div class="item">
+                    <a href='{{article.link}}' target="_blank" class="poster">
+                        <div class="thumb" style="background-image: url('{{article.image}}');"></div>
+                        <article>
+                            <h2>{{article.title}}</h2>
+                            <span>{{article.source}}</span>
+                        </article>
+                    </a>
+                </div>
+                {% empty %}
+                <p style="width: 300px;">No relevant news has been found.</p>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- Comments -->
+        <div id="Comments" class="tabcontent">
+        <!-- begin wwww.htmlcommentbox.com -->
+         <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">HTML Comment Box</a> is loading comments...</div>
+         <link rel="stylesheet" type="text/css" href="//www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+         <script type="text/javascript" id="hcb"> 
             /*<!--*/ 
-            if (!window.hcb_user){
-                hcb_user={};
-            } (function(){
+            if(!window.hcb_user){hcb_user={};} (function(){
                 var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="//www.htmlcommentbox.com";
                 s.setAttribute("type","text/javascript");
-                s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1493395617865");
+                s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&mod=%241%24wq1rdBcg%24Il0xu7cN4%2FF37kJs%2FqpTH1"+"&opts=16862&num=10&ts=1494320681080");
                 if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);
-            })();
-             /*-->*/ 
-            </script>
-            <!-- end www.htmlcommentbox.com -->
-            </div>
-        </section>
+            })(); 
+            /*-->*/ 
+        </script>
+        <!-- end www.htmlcommentbox.com -->
+        </div>
+    </section>
 </div>
 <script>
     function openTab(evt, tabName) {
